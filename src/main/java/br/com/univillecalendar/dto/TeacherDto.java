@@ -14,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class TeacherDto implements Serializable {
-    private UUID teacherId = UUID.randomUUID();
     private String teacherFirstName;
     private String teacherLastName;
     private String teacherEmail;

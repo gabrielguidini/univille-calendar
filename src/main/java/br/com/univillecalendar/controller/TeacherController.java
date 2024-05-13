@@ -1,14 +1,15 @@
 package br.com.univillecalendar.controller;
 
 import br.com.univillecalendar.dto.TeacherDto;
+import br.com.univillecalendar.model.Teacher;
 import br.com.univillecalendar.service.TeacherService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Email;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController("/teacher")
 public class TeacherController {
@@ -24,19 +25,25 @@ public class TeacherController {
     @PostMapping("/createTeacher")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public TeacherDto createNewTeacher(@RequestParam String firstName,
-                                       @RequestParam String lastName,
-                                       @RequestParam @Email String email) {
+    public TeacherDto createNewTeacher(@RequestBody TeacherDto teacher) {
 
-        return teacherService.createNewTeacher(firstName, lastName, email);
+        return teacherService.createNewTeacher(teacher);
 
     }
 
-    @GetMapping()
+    @GetMapping("/allTeachers")
     @ResponseStatus(HttpStatus.OK)
-    public List<TeacherDto> getAllTeachers() {
+    public List<Teacher> getAllTeachers() {
 
         return this.teacherService.getAllTeachers();
     }
+
+    @GetMapping("/{teacherId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Teacher> getAllTeachers(@PathVariable UUID teacherId) {
+
+        return this.teacherService.getAllTeachers();
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package br.com.univillecalendar.service;
 
 import br.com.univillecalendar.dto.TeacherDto;
+import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.model.Teacher;
 import br.com.univillecalendar.repository.TeacherRepository;
 import br.com.univillecalendar.utils.TeacherUtils;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,26 +25,23 @@ public class TeacherService {
         this.objectMapper = objectMapper;
     }
 
-    public TeacherDto createNewTeacher(String firsName, String lastName, String email) {
+    public TeacherDto createNewTeacher(TeacherDto teacher) {
 
-        Teacher teacher = Teacher.builder()
-                .teacherFirstName(firsName)
-                .teacherLastName(lastName)
-                .teacherEmail(email)
-                .build();
+        this.save(TeacherUtils.convertDtoToEntity(teacher));
 
-        this.save(teacher);
-
-        return TeacherUtils.convertEntityToDto(teacher);
+        return teacher;
     }
 
-    public List<TeacherDto> getAllTeachers() {
+    public List<Teacher> getAllTeachers() {
 
-        List<Teacher> teacherList = this.teacherRepository.findAll();
+        return this.teacherRepository.findAll();
+    }
 
-        return teacherList.stream()
-                .map(TeacherUtils::convertEntityToDto)
-                .collect(Collectors.toList());
+    public TeacherDto getTeacherById(UUID uuid) {
+
+        Teacher teacher = this.teacherRepository.findById(uuid).orElseThrow(() -> new GenericException("Teacher Not Found"));
+
+        return TeacherUtils.convertEntityToDto(teacher);
     }
 
     /*todo: make the rest of the CRUD developing around the business rules and the SOLID's principle.
