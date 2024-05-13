@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 public class TeacherService {
@@ -31,6 +34,15 @@ public class TeacherService {
         this.save(teacher);
 
         return TeacherUtils.convertEntityToDto(teacher);
+    }
+
+    public List<TeacherDto> getAllTeachers() {
+
+        List<Teacher> teacherList = this.teacherRepository.findAll();
+
+        return teacherList.stream()
+                .map(TeacherUtils::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     /*todo: make the rest of the CRUD developing around the business rules and the SOLID's principle.

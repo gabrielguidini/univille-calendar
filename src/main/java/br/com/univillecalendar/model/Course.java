@@ -1,7 +1,6 @@
 package br.com.univillecalendar.model;
 
 import br.com.univillecalendar.model.enums.CourseEnum;
-import br.com.univillecalendar.model.enums.DayWeekEnum;
 import jakarta.persistence.*;
 import lombok.*;
 

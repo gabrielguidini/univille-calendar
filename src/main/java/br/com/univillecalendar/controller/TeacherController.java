@@ -3,10 +3,12 @@ package br.com.univillecalendar.controller;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.service.TeacherService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController("/teacher")
 public class TeacherController {
@@ -20,6 +22,8 @@ public class TeacherController {
     }
 
     @PostMapping("/createTeacher")
+    @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
     public TeacherDto createNewTeacher(@RequestParam String firstName,
                                        @RequestParam String lastName,
                                        @RequestParam @Email String email) {
@@ -27,4 +31,12 @@ public class TeacherController {
         return teacherService.createNewTeacher(firstName, lastName, email);
 
     }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<TeacherDto> getAllTeachers() {
+
+        return this.teacherService.getAllTeachers();
+    }
+
 }

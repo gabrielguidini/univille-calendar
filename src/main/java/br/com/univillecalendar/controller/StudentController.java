@@ -11,6 +11,6 @@ public class StudentController {
         -- create
         -- delete
         -- update
-        --get
+        -- get
      */
 }
