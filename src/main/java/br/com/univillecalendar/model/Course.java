@@ -21,5 +21,6 @@ public class Course {
     private String courseName;
     private CourseEnum courseType;;
     @ManyToMany(cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
+    @JoinTable(name = "course")
     private List<Subject> subjects;
 }

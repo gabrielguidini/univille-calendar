@@ -1,6 +1,6 @@
 package br.com.univillecalendar.controller.documentation;
 
-public interface UserControllerDocumentation {
+public interface StudentControllerDocumentation {
 //    @Operation(summary = "Get all clients")
 //    @ApiResponses(value = {
 //            @ApiResponse(responseCode = "200",
