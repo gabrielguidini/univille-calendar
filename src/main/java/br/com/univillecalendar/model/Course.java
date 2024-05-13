@@ -1,8 +1,8 @@
 package br.com.univillecalendar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import br.com.univillecalendar.model.enums.CourseEnum;
+import br.com.univillecalendar.model.enums.DayWeekEnum;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "course")
 public class Course {
-
-    @Id
-    private UUID courseId;
+    @Id @Builder.Default
+    private UUID courseId = UUID.randomUUID();
     private String courseName;
-    @OneToMany
+    private CourseEnum courseType;;
+    @ManyToMany(cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
     private List<Subject> subjects;
-
 }
