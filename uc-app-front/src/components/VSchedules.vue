@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <h1>horarios</h1>
+</template>
 
 <script></script>
 

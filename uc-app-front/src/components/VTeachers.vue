@@ -1,10 +1,13 @@
-<template>
+<!-- <template>
+  <v-card>
+    <v-card-title>Professores</v-card-title>
+    <v-card></v-card>
+  </v-card>
   <v-table height="100">
     <thead class="thead-table">
       <tr>
         <th class="text-left">Discplina</th>
         <th class="text-left">Hora Aula</th>
-        <!-- <th class="button-container text-left"></th> -->
       </tr>
     </thead>
     <tbody>
@@ -14,6 +17,29 @@
       </tr>
     </tbody>
   </v-table>
+</template> -->
+
+<template>
+  <div class="container" v-for="(teacher, index) in this.teachers" :key="index">
+    <v-card width="250">
+      <v-img
+        class="align-end text-white"
+        height="200"
+        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        cover
+      >
+      </v-img>
+
+      <v-card-text>
+        <v-card-title
+          >{{ teacher.teacherFirstName }}
+          {{ teacher.teacherLastName }}</v-card-title
+        >
+        <v-card-subtitle>{{ teacher.teacherEmail }}</v-card-subtitle>
+        <v-card-subtitle>ainda</v-card-subtitle>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>

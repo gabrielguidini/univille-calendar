@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <h1>disciplinas</h1>
+</template>
 
 <script></script>
 

@@ -1,5 +1,11 @@
-<script></script>
+<script setup>
+import VCourses from "../components/VCourses.vue";
+</script>
 
-<template></template>
+<template>
+  <main>
+    <VCourses />
+  </main>
+</template>
 
 <style></style>

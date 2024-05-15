@@ -1,9 +1,13 @@
-<script setup></script>
-
 <template>
   <v-card>
     <v-layout>
-      <!-- <v-navigation-drawer expand-on-hover rail disable-resize-watcher color="light-green-darken-1"> -->
+      <!-- <v-navigation-drawer
+        expand-on-hover
+        rail
+        disable-resize-watcher
+        color="light-green-darken-1"
+        width="250"
+      > -->
       <v-navigation-drawer disable-resize-watcher color="light-green-darken-1">
         <v-list>
           <v-list-item
@@ -53,5 +57,7 @@
     </v-layout>
   </v-card>
 </template>
+
+<script></script>
 
 <style scoped></style>
