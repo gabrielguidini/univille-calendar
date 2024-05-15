@@ -16,8 +16,8 @@ public class Student {
 
     @Id @Builder.Default
     private UUID studentId = UUID.randomUUID();
-    private String firstName;
-    private String lastName;
+    private String studentFirstName;
+    private String studentLastName;
     private String email;
     private String phone;
     @OneToOne
