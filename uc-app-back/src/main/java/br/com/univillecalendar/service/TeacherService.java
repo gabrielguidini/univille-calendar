@@ -1,5 +1,6 @@
 package br.com.univillecalendar.service;
 
+import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
@@ -28,21 +29,38 @@ public class TeacherService {
         this.objectMapper = objectMapper;
     }
 
-    public TeacherDto createNewTeacher(TeacherDto teacher) {
+    public TeacherDto createNewTeacher(TeacherDto teacher) throws JsonProcessingException {
 
-        this.save(TeacherUtils.convertDtoToEntity(teacher));
+        Teacher savedTeacher = this.save(TeacherUtils.convertDtoToEntity(teacher));
+
+        if (teacherRepository.findById(savedTeacher.getTeacherId()).isPresent()) {
+            throw new GenericException("Teacher Already Exists");
+        }
+
+        log.info("TeacherService.createNewTeacher() -> finish process, teacherId {}", this.objectMapper.writeValueAsString(savedTeacher));
 
         return teacher;
     }
 
-    public List<Teacher> getAllTeachers() {
+    public List<Teacher> getAllTeachers() throws JsonProcessingException {
+        log.info("TeacherService.getAllTeachers() -> init process");
+
+        List<Teacher> teacherList = this.teacherRepository.findAll();
+
+        if (teacherList.isEmpty()) {
+            throw new GenericException(TEACHER_NOT_FOUND_MESSAGE);
+        }
+
+        log.info("TeacherService.getAllTeachers() -> finish process, teacherList {}", this.objectMapper.writeValueAsString(teacherList) );
 
         return this.teacherRepository.findAll();
     }
 
-    public Teacher getTeacherById(UUID uuid) {
+    public Teacher getTeacherById(UUID teacherId) {
 
-        return this.teacherRepository.findById(uuid).orElseThrow(() -> new GenericException("Teacher Not Found"));
+        log.info("TeacherController.getTeacherById() -> init process teacherId {}", teacherId);
+
+        return this.teacherRepository.findById(teacherId).orElseThrow(() -> new GenericException("Teacher Not Found"));
     }
 
     public void deleteTeacher(UUID teacherId) throws JsonProcessingException {
@@ -72,11 +90,13 @@ public class TeacherService {
         return TeacherUtils.convertEntityToDto(teacher);
     }
 
-    public void save(Teacher teacher) {
+    private Teacher save(Teacher teacher) {
         log.info("TeacherService.save() -> init process");
 
-        this.teacherRepository.save(teacher);
+        Teacher savedTeacher = this.teacherRepository.save(teacher);
 
         log.info("TeacherService.save() -> finish process");
+
+        return savedTeacher;
     }
 }
