@@ -9,10 +9,9 @@ import java.util.UUID;
 @UtilityClass
 public class SubjectUtils {
 
-    public Subject convertDtoToEntity(SubjectDto subject){
+    public SubjectDto convertEntityToDto(Subject subject){
 
-        return Subject.builder()
-                .subjectId(UUID.randomUUID())
+        return SubjectDto.builder()
                 .subjectName(subject.getSubjectName())
                 .startingTime(subject.getStartingTime())
                 .endingTime(subject.getEndingTime())
@@ -20,9 +19,10 @@ public class SubjectUtils {
                 .build();
     }
 
-    public SubjectDto convertEntityToDto(SubjectDto subject){
+    public Subject convertDtoToEntity(SubjectDto subject){
 
-        return SubjectDto.builder()
+        return Subject.builder()
+                .subjectId(UUID.randomUUID())
                 .subjectName(subject.getSubjectName())
                 .startingTime(subject.getStartingTime())
                 .endingTime(subject.getEndingTime())

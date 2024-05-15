@@ -16,12 +16,7 @@ import java.util.UUID;
 
 @RestController("/subject")
 @Slf4j
-    /*
-    todo:
-        -- delete
-        -- update
-        -- get
-     */
+
 public class SubjectController {
 
     private final SubjectService subjectService;
