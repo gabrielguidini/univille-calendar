@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "http-server", "dist" ]
+CMD [ "http-server", "-p 3000" ,"dist" ]

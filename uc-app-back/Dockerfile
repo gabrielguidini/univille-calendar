@@ -6,4 +6,4 @@ COPY build/libs/*.jar .
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "univille-calendar.jar"]
+ENTRYPOINT ["java", "-jar", "uc-app-back.jar"]

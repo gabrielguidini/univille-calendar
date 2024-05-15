@@ -13,7 +13,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
-    networks: ["uc-network"]
+    networks: ["uc-backdb"]
 
   uc-app-back:
     image: gabrielguidini/uc-app-back:latest
@@ -33,7 +33,9 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
-    networks: ["uc-network"]
+    networks:
+      - uc-backdb
+      - uc-backfront
 
   uc-app-front:
     image: gabrielguidini/uc-app-front:latest
@@ -47,6 +49,10 @@ services:
       - uc-app-back
     ports:
       - "3000:3000"
-    networks: ["uc-network"]
+    networks: ["uc-backfront"]
 
-networks: { uc-network: {} }
+networks:
+  uc-backdb:
+    driver: bridge
+  uc-backfront:
+    driver: bridge
