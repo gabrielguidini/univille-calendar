@@ -25,7 +25,7 @@
       <v-img
         class="align-end text-white"
         height="200"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        src="https://pbs.twimg.com/profile_images/1450817790022144008/MmPArZ2C_400x400.jpg"
         cover
       >
       </v-img>
