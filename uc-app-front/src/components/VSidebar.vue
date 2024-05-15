@@ -16,7 +16,11 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home" title="Inicio" :to="{ name: 'home' }"></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-home"
+            title="Inicio"
+            :to="{ name: 'home' }"
+          ></v-list-item>
           <v-list-item
             prepend-icon="mdi-book-open-variant"
             title="Cursos"
@@ -40,7 +44,7 @@
           <v-list-item
             prepend-icon="mdi-account-group"
             title="Professores"
-            :to="{ name: 'treachers' }"
+            :to="{ name: 'teachers' }"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
