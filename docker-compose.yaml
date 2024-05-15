@@ -14,6 +14,8 @@ services:
     ports:
       - "5432:5432"
     networks: ["uc-backdb"]
+    volumes:
+      - uc-volume:/var/lib/postgresql
 
   uc-app-back:
     image: gabrielguidini/uc-app-back:latest
@@ -56,3 +58,5 @@ networks:
     driver: bridge
   uc-backfront:
     driver: bridge
+volumes:
+  uc-volume: {}
