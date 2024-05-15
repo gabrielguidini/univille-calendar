@@ -14,8 +14,8 @@ public class StudentUtils {
         return StudentDto.builder()
                 .studentFirstName(student.getStudentFirstName())
                 .studentLastName(student.getStudentLastName())
-                .email(student.getEmail())
-                .phone(student.getPhone())
+                .studentEmail(student.getStudentEmail())
+                .studentPhone(student.getStudentPhone())
                 .build();
     }
 
@@ -25,8 +25,8 @@ public class StudentUtils {
                 .studentId(UUID.randomUUID())
                 .studentFirstName(student.getStudentFirstName())
                 .studentLastName(student.getStudentLastName())
-                .email(student.getEmail())
-                .phone(student.getPhone())
+                .studentEmail(student.getStudentEmail())
+                .studentPhone(student.getStudentPhone())
                 .build();
     }
 }

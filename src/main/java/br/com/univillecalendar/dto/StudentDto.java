@@ -17,7 +17,7 @@ public class StudentDto implements Serializable {
     private UUID studentId = UUID.randomUUID();
     private String studentFirstName;
     private String studentLastName;
-    private String email;
-    private String phone;
+    private String studentEmail;
+    private String studentPhone;
     private CourseDto course;
 }
