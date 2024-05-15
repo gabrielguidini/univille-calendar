@@ -1,0 +1,20 @@
+@import './base.css';
+
+#app {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  background-color: #e0e0e0;
+  height: 100vh;
+}
+html {
+  overflow-y: auto !important;
+}
+
+a,
+.green {
+  text-decoration: none;
+  transition: 0.4s;
+}
