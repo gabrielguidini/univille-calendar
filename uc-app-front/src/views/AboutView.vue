@@ -1,7 +1,3 @@
-<template>
-  <div class="about">
-    <h1>Sobre</h1>
-  </div>
-</template>
+<template></template>
 
 <style></style>

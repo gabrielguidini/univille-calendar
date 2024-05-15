@@ -1,11 +1,5 @@
-<script setup>
-import VSubjects from '../components/VSubjects.vue'
-</script>
+<script setup></script>
 
-<template>
-  <main>
-    <VSubjects />
-  </main>
-</template>
+<template></template>
 
 <style></style>

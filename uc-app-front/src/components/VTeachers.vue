@@ -1,6 +1,5 @@
 <template>
-  <h1>teacher</h1>
-  <v-table height="">
+  <v-table height="100">
     <thead class="thead-table">
       <tr>
         <th class="text-left">Discplina</th>
@@ -36,7 +35,6 @@ export default {
         .get("http://localhost:8080/allTeachers")
         .then((res) => {
           this.teachers = res.data;
-          console.log("👉 this.teachers => ", this.teachers);
         })
         .catch((error) => {
           console.log(error);
@@ -46,9 +44,4 @@ export default {
 };
 </script>
 
-<style scoped>
-h1,
-p {
-  color: black;
-}
-</style>
+<style scoped></style>
