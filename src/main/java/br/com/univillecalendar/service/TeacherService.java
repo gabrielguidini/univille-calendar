@@ -56,11 +56,6 @@ public class TeacherService {
 
     }
 
-    /*todo: make the rest of the CRUD developing around the business rules and the SOLID's principle.
-    * tip: the main methods that create, delete, read etc, normally is up in the file. create -> delete ............
-    *  and finishing the methods that implements the other main methods
-    * */
-
     public TeacherDto updateTeacher(UUID teacherId, TeacherFormUpdate teacherFormUpdate) throws JsonProcessingException {
         log.info("TeacherService.updateTeacher() -> init process, teacherId {}", teacherId);
 
