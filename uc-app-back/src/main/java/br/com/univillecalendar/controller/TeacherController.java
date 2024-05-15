@@ -3,6 +3,8 @@ package br.com.univillecalendar.controller;
 import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.dto.TeacherFormUpdate;
+import br.com.univillecalendar.exceptions.GenericException;
+import br.com.univillecalendar.exceptions.TeacherNotFoundException;
 import br.com.univillecalendar.model.Teacher;
 import br.com.univillecalendar.service.TeacherService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,26 +34,44 @@ public class TeacherController implements TeacherControllerDocumentation {
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public TeacherDto createNewTeacher(@RequestBody TeacherDto teacher) throws JsonProcessingException {
-
         log.info("TeacherController.createNewTeacher() -> init process, teacherId {}", this.objectMapper.writeValueAsString(teacher));
 
-        return teacherService.createNewTeacher(teacher);
+        try{
+            return teacherService.createNewTeacher(teacher);
+        } catch (GenericException e) {
+            log.error("TeacherController.createNewTeacher() -> error while creating a new teacher, body {} error {}", this.objectMapper.writeValueAsString(teacher), e.getMessage());
+            throw new GenericException(e.getMessage());
+        }
 
     }
 
     @GetMapping("/allTeachers")
     @ResponseStatus(HttpStatus.OK)
-    public List<Teacher> getAllTeachers() {
+    public List<Teacher> getAllTeachers() throws JsonProcessingException{
+        log.info("TeacherController.getAllTeachers() -> init process");
 
-        return this.teacherService.getAllTeachers();
+        try {
+            return this.teacherService.getAllTeachers();
+        } catch (TeacherNotFoundException e) {
+            log.error("TeacherController.getAllTeachers() -> error while getting all teachers, error {}", e.getMessage());
+            throw new TeacherNotFoundException(e.getMessage());
+        }
+
     }
 
     @GetMapping("/{teacherId}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Teacher getTeacherById(@PathVariable UUID teacherId) {
+    public Teacher getTeacherById(@PathVariable UUID teacherId) throws JsonProcessingException {
 
-        return this.teacherService.getTeacherById(teacherId);
+        log.info("TeacherController.getTeacherById() -> init process, teacherId {}", teacherId);
+        try {
+            return this.teacherService.getTeacherById(teacherId);
+        } catch (TeacherNotFoundException e) {
+            log.error("TeacherController.getTeacherById() -> error while getting teacher by id, teacherId {} , error {}", teacherId,e.getMessage());
+            throw new TeacherNotFoundException(e.getMessage());
+        }
+
     }
 
     @DeleteMapping("/{teacherId}")
@@ -60,9 +80,14 @@ public class TeacherController implements TeacherControllerDocumentation {
     public void deleteTeacher(@PathVariable UUID teacherId) throws JsonProcessingException {
         log.info("TeacherController.deleteTeacher() -> init process, teacherId {}", teacherId);
 
-        this.teacherService.deleteTeacher(teacherId);
+        try {
+            this.teacherService.deleteTeacher(teacherId);
+            log.info("TeacherController.deleteTeacher() -> finish process, teacherId {}", teacherId);
+        } catch (TeacherNotFoundException e) {
+            log.error("TeacherController.deleteTeacher() -> error while deleting teacher , teacherId {} , error {}", teacherId, e.getMessage());
+            throw new TeacherNotFoundException(e.getMessage());
+        }
 
-        log.info("TeacherController.deleteTeacher() -> finish process, teacherId {}", teacherId);
     }
 
     @PutMapping("/updateTeacher/{teacherId}")
@@ -71,8 +96,15 @@ public class TeacherController implements TeacherControllerDocumentation {
     public TeacherDto updateTeacher(@PathVariable UUID teacherId, @RequestBody TeacherFormUpdate teacherFormUpdate) throws JsonProcessingException {
         log.info("TeacherController.updateTeacher() -> init process, teacherId {}, updatedTeacher {}", teacherId, this.objectMapper.writeValueAsString(teacherFormUpdate));
 
-        return teacherService.updateTeacher(teacherId, teacherFormUpdate);
-
+        try {
+            return teacherService.updateTeacher(teacherId, teacherFormUpdate);
+        } catch (GenericException e) {
+            log.error("TeacherController.updateTeacher() -> error while updating teacher , teacherFormUpdate {} , error {}", this.objectMapper.writeValueAsString(teacherFormUpdate), e.getMessage());
+            throw new GenericException(e.getMessage());
+        } catch (TeacherNotFoundException e) {
+            log.error("TeacherController.updateTeacher() -> error while updating teacher , teacherFormUpdate {} , error {}", this.objectMapper.writeValueAsString(teacherFormUpdate), e.getMessage());
+            throw new TeacherNotFoundException(e.getMessage());
+        }
     }
 
 }
