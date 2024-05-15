@@ -1,5 +1,6 @@
 package br.com.univillecalendar.service;
 
+import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
@@ -28,9 +29,11 @@ public class TeacherService {
         this.objectMapper = objectMapper;
     }
 
-    public TeacherDto createNewTeacher(TeacherDto teacher) {
+    public TeacherDto createNewTeacher(TeacherDto teacher) throws JsonProcessingException {
 
         this.save(TeacherUtils.convertDtoToEntity(teacher));
+
+        log.info("TeacherService.createNewTeacher() -> finish process, teacherId {}", this.objectMapper.writeValueAsString(teacher));
 
         return teacher;
     }

@@ -1,5 +1,6 @@
 package br.com.univillecalendar.controller;
 
+import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.model.Teacher;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController()
+@RestController
 @Slf4j
-public class TeacherController {
+@RequestMapping("/teacher")
+public class TeacherController implements TeacherControllerDocumentation {
 
     private final TeacherService teacherService;
     private final ObjectMapper objectMapper;
@@ -29,7 +31,9 @@ public class TeacherController {
     @PostMapping("/createTeacher")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public TeacherDto createNewTeacher(@RequestBody TeacherDto teacher) {
+    public TeacherDto createNewTeacher(@RequestBody TeacherDto teacher) throws JsonProcessingException {
+
+        log.info("TeacherController.createNewTeacher() -> init process, teacherId {}", this.objectMapper.writeValueAsString(teacher));
 
         return teacherService.createNewTeacher(teacher);
 
