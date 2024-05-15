@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   uc-db:
@@ -6,26 +6,28 @@ services:
     container_name: uc-db
     restart: on-failure
     env_file:
-      - .env
+      - uc-app-back/.env
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
-    networks: ['uc-network']
+    networks: ["uc-backdb"]
+    volumes:
+      - uc-volume:/var/lib/postgresql
 
-  uc-app:
-    image: gabrielguidini/univille-calendar:latest
-    container_name: uc-app
+  uc-app-back:
+    image: gabrielguidini/uc-app-back:latest
+    container_name: uc-app-back
     restart: on-failure
     build:
-      context: ./univille-calendar
-      dockerfile: Dockerfile
+      context: ./univille-calendar/uc-app-back
+      dockerfile: uc-app-back/Dockerfile
     depends_on:
       - uc-db
     env_file:
-      - .env
+      - uc-app-back/.env
     environment:
       - SPRING_DATASOURCE_URL=${POSTGRES_URL}
       - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
@@ -33,6 +35,28 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8080:8080"
-    networks: ['uc-network']
+    networks:
+      - uc-backdb
+      - uc-backfront
 
-networks: {uc-network: {}}
+  uc-app-front:
+    image: gabrielguidini/uc-app-front:latest
+    container_name: uc-app-front
+    restart: on-failure
+    build:
+      context: ./univille-calendar/uc-app-front
+      dockerfile: uc-app-back/Dockerfile
+    depends_on:
+      - uc-db
+      - uc-app-back
+    ports:
+      - "3000:3000"
+    networks: ["uc-backfront"]
+
+networks:
+  uc-backdb:
+    driver: bridge
+  uc-backfront:
+    driver: bridge
+volumes:
+  uc-volume: {}
