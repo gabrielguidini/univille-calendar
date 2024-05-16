@@ -1,4 +1,4 @@
-# univille-calendar-front
+# uc-app-front
 
 Front-end project for POO II work.
 
