@@ -27,6 +27,7 @@
                     :counter="10"
                     :rules="nameRules"
                     label="Nome"
+                    variant="outlined"
                     required
                   ></v-text-field>
                 </v-col>
@@ -37,6 +38,7 @@
                     :counter="10"
                     :rules="nameRules"
                     label="Sobrenome"
+                    variant="outlined"
                     required
                   ></v-text-field>
                 </v-col>
@@ -46,6 +48,7 @@
                     v-model="teacherEmail"
                     :rules="emailRules"
                     label="E-mail"
+                    variant="outlined"
                     required
                   ></v-text-field>
                 </v-col>

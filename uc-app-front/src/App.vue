@@ -1,6 +1,6 @@
 <template>
   <v-app theme="dark">
-    <VHeader />
+    <VHeader v-if="isLogged" />
     <router-view></router-view>
   </v-app>
 </template>
@@ -13,6 +13,11 @@ export default {
   components: {
     VTeachers,
     VHeader,
+  },
+  data() {
+    return {
+      isLogged: this.$store.state.isLogged,
+    };
   },
 };
 </script>

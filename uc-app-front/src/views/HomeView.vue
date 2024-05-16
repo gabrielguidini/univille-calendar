@@ -1,5 +1,5 @@
 <script setup>
-import VHomer from "../components/VHome.vue";
+import VHome from "../components/VHome.vue";
 </script>
 <template>
   <h1>inicio</h1>
