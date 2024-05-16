@@ -1,7 +1,9 @@
 package br.com.univillecalendar.dto;
 
 import br.com.univillecalendar.model.enums.DayWeekEnum;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;

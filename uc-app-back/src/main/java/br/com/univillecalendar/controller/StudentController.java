@@ -1,13 +1,13 @@
 package br.com.univillecalendar.controller;
 
 import br.com.univillecalendar.dto.StudentDto;
+import br.com.univillecalendar.dto.StudentFormUpdate;
 import br.com.univillecalendar.model.Student;
 import br.com.univillecalendar.service.StudentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +63,14 @@ public class StudentController {
         log.info("StudentController.deleteStudent() -> finish process, studentId {}", studentId);
     }
 
+    @PutMapping("/updateStudent, /{studentId}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public StudentDto updateStudent(@PathVariable UUID studentId, @RequestBody StudentFormUpdate studentFormUpdate) throws JsonProcessingException{
+        log.info("StudentController.updateStudent() -> init process, studentId{}, updatedStudent{}", studentId, this.objectMapper.writeValueAsString(studentFormUpdate));
+
+        return studentService.updateStudent(studentId, studentFormUpdate);
+    }
+
 }
+

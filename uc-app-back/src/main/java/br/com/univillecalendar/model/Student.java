@@ -18,8 +18,8 @@ public class Student {
     private UUID studentId = UUID.randomUUID();
     private String studentFirstName;
     private String studentLastName;
-    private String email;
-    private String phone;
+    private String studentEmail;
+    private String studentPhone;
     @OneToOne
     private Course course;
 }
