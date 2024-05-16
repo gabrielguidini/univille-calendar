@@ -1,9 +1,7 @@
 package br.com.univillecalendar.dto;
 
 import br.com.univillecalendar.model.enums.DayWeekEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectDto implements Serializable {
-    private UUID subjectId = UUID.randomUUID();
     private String subjectName;
     private String startingTime;
     private String endingTime;

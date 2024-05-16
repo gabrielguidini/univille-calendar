@@ -22,7 +22,7 @@ public class Subject {
     private String startingTime;
     private String endingTime;
     private List<DayWeekEnum> daysWeek;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     private Teacher teachers;
 
 }

@@ -20,7 +20,7 @@ public class SubjectUtils {
                 .startingTime(subject.getStartingTime())
                 .endingTime(subject.getEndingTime())
                 .daysWeek(subject.getDaysWeek())
-                .teachers(TeacherUtils.convertEntityToDto(subject.getTeachers()))
+                .teachers(TeacherUtils.convertEntityToDto(subject.getTeachers()) == null ? null : TeacherUtils.convertEntityToDto(subject.getTeachers()))
                 .build();
 
     }
@@ -32,7 +32,7 @@ public class SubjectUtils {
                 .startingTime(subjectDto.getStartingTime())
                 .endingTime(subjectDto.getEndingTime())
                 .daysWeek(subjectDto.getDaysWeek())
-                .teachers(TeacherUtils.convertDtoToEntity(subjectDto.getTeachers()))
+                .teachers(TeacherUtils.convertDtoToEntity(subjectDto.getTeachers()) == null ? null : TeacherUtils.convertDtoToEntity(subjectDto.getTeachers()))
                 .build();
 
     }

@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class SubjectFormUpdate {
 
-        private String subjectName;
         private String startingTime;
         private String endingTime;
         private List<DayWeekEnum> daysWeek;

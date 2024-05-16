@@ -2,8 +2,12 @@ package br.com.univillecalendar.service;
 
 import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.dto.SubjectFormUpdate;
+import br.com.univillecalendar.dto.TeacherDto;
+import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.SubjectNotFoundException;
 import br.com.univillecalendar.model.Subject;
+import br.com.univillecalendar.model.Teacher;
+import br.com.univillecalendar.model.enums.DayWeekEnum;
 import br.com.univillecalendar.repository.SubjectRepository;
 import br.com.univillecalendar.utils.SubjectUtils;
 import br.com.univillecalendar.utils.TeacherUtils;
@@ -12,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,9 +32,18 @@ public class SubjectService {
         this.objectMapper = objectMapper;
     }
 
-    public SubjectDto createNewSubject(SubjectDto subject) {
+    public Subject createNewSubject(SubjectDto subjectDto) throws JsonProcessingException {
 
-        this.save(SubjectUtils.convertDtoToEntity(subject));
+        Subject subject = Subject.builder()
+                .subjectName(subjectDto.getSubjectName())
+                .startingTime(subjectDto.getStartingTime())
+                .endingTime(subjectDto.getEndingTime())
+                .daysWeek(subjectDto.getDaysWeek())
+                .teachers(null)
+                .build();
+
+        save(subject);
+
         return subject;
     }
 
@@ -59,7 +73,6 @@ public class SubjectService {
 
         Subject subject = this.subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
 
-        subject.setSubjectName(subjectFormUpdate.getSubjectName());
         subject.setStartingTime(subjectFormUpdate.getStartingTime());
         subject.setEndingTime(subjectFormUpdate.getEndingTime());
         subject.setDaysWeek(subjectFormUpdate.getDaysWeek());
@@ -73,13 +86,29 @@ public class SubjectService {
         return SubjectUtils.convertEntityToDto(subject);
     }
 
+    public SubjectDto addTeacherIntoSubject(UUID subjectId, String teacherFirstName, String teacherLastName) throws JsonProcessingException {
+        log.info("SubjectService.updateSubjectTeacher() -> init process, subjectId {}", subjectId);
 
-    public void save(Subject subject) {
-        log.info("init");
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
+
+        Teacher teacher = subjectRepository.findTeacherByName(teacherFirstName, teacherLastName);
+
+        subject.setTeachers(teacher);
+
+        this.save(subject);
+
+        log.info("SubjectService.updateSubjectTeacher() -> finish process, subjectId {}", this.objectMapper.writeValueAsString(subjectId));
+
+        return SubjectUtils.convertEntityToDto(subject);
+    }
+
+
+    public void save(Subject subject) throws JsonProcessingException {
+        log.info("SubjectService.save() -> init process, subject {}", this.objectMapper.writeValueAsString(subject));
 
         this.subjectRepository.save(subject);
 
-        log.info("finish");
+        log.info("SubjectService.save() -> finish process, subject {}", this.objectMapper.writeValueAsString(subject));
     }
 }
 

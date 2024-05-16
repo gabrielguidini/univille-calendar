@@ -16,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDto implements Serializable {
-    private UUID courseId = UUID.randomUUID();
     private String courseName;
     private CourseEnum courseType;
     private List<SubjectDto> subjects;

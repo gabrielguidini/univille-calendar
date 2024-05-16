@@ -6,7 +6,6 @@ import br.com.univillecalendar.exceptions.CourseNotFoundException;
 import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.model.Course;
 import br.com.univillecalendar.service.CourseService;
-import br.com.univillecalendar.service.StudentService;
 import br.com.univillecalendar.utils.CourseUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
