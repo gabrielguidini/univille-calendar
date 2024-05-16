@@ -2,12 +2,9 @@ package br.com.univillecalendar.service;
 
 import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.dto.SubjectFormUpdate;
-import br.com.univillecalendar.dto.TeacherDto;
-import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.SubjectNotFoundException;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.model.Teacher;
-import br.com.univillecalendar.model.enums.DayWeekEnum;
 import br.com.univillecalendar.repository.SubjectRepository;
 import br.com.univillecalendar.utils.SubjectUtils;
 import br.com.univillecalendar.utils.TeacherUtils;
@@ -16,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +28,7 @@ public class SubjectService {
         this.objectMapper = objectMapper;
     }
 
-    public Subject createNewSubject(SubjectDto subjectDto) throws JsonProcessingException {
+    public Subject createNewBaseSubject(SubjectDto subjectDto) throws JsonProcessingException {
 
         Subject subject = Subject.builder()
                 .subjectName(subjectDto.getSubjectName())
@@ -42,7 +38,7 @@ public class SubjectService {
                 .teachers(null)
                 .build();
 
-        save(subject);
+        this.save(subject);
 
         return subject;
     }
@@ -77,7 +73,6 @@ public class SubjectService {
         subject.setEndingTime(subjectFormUpdate.getEndingTime());
         subject.setDaysWeek(subjectFormUpdate.getDaysWeek());
         subject.setTeachers(TeacherUtils.convertDtoToEntity(subjectFormUpdate.getTeachers()));
-
 
         this.save(subject);
 

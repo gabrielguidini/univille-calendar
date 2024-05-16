@@ -33,11 +33,11 @@ public class CourseController implements CourseControllerDocuementation {
     @PostMapping("/createNewCourse")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public CourseDto createNewCourse(@RequestBody CourseDto course) throws JsonProcessingException {
-        log.info("CourseController.createNewCourse() -> init process, body {}", this.objectMapper.writeValueAsString(course));
+    public CourseDto createNewCourse(@RequestBody CourseDto courseDto) throws JsonProcessingException {
+        log.info("CourseController.createNewCourse() -> init process, body {}", this.objectMapper.writeValueAsString(courseDto));
 
         try {
-            return this.courseService.createNewCourse(course);
+            return this.courseService.createNewBaseCourse(courseDto);
         } catch (GenericException e) {
             log.error(e.getMessage());
             throw new GenericException(e.getMessage());

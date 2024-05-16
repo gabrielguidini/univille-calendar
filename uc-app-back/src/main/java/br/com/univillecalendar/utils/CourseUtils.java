@@ -17,7 +17,7 @@ public class CourseUtils {
         return CourseDto.builder()
                 .courseName(course.getCourseName())
                 .courseType(course.getCourseType())
-                .subjects(course.getSubjects().stream().map(SubjectUtils::convertEntityToDto).collect(Collectors.toList()))
+                .subjects(course.getSubjects() == null ? null : course.getSubjects().stream().map(SubjectUtils::convertEntityToDto).collect(Collectors.toList()))
                 .build();
     }
 
@@ -26,7 +26,7 @@ public class CourseUtils {
         return Course.builder()
                 .courseName(courseDto.getCourseName())
                 .courseType(courseDto.getCourseType())
-                .subjects(courseDto.getSubjects().stream().map(SubjectUtils::convertDtoToEntity).collect(Collectors.toList()))
+                .subjects(courseDto.getSubjects() == null ? null : courseDto.getSubjects().stream().map(SubjectUtils::convertDtoToEntity).collect(Collectors.toList()))
                 .build();
     }
 }

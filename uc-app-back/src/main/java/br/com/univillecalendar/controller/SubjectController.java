@@ -2,13 +2,10 @@ package br.com.univillecalendar.controller;
 
 import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.dto.SubjectFormUpdate;
-import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.service.SubjectService;
-import br.com.univillecalendar.utils.SubjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.Convert;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,7 +32,7 @@ public class SubjectController {
     @ResponseStatus(HttpStatus.CREATED)
     public Subject createNewSubject(@RequestBody SubjectDto subject) throws JsonProcessingException {
 
-        return subjectService.createNewSubject(subject);
+        return subjectService.createNewBaseSubject(subject);
     }
 
     @GetMapping("/allSubjects")

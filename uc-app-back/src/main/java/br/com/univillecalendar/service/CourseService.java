@@ -20,25 +20,27 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepository courseRepository;
-    private final SubjectService subjectService;
     private final ObjectMapper objectMapper;
     private final String NOT_FOUND_EXCEPTION = "Course Not Found";
 
     public CourseService(CourseRepository courseRepository, SubjectService subjectService, ObjectMapper objectMapper) {
         this.courseRepository = courseRepository;
-        this.subjectService = subjectService;
         this.objectMapper = objectMapper;
     }
 
-    public CourseDto createNewCourse(CourseDto courseDto) throws JsonProcessingException {
+    public CourseDto createNewBaseCourse(CourseDto courseDto) throws JsonProcessingException {
         log.info("CourseService.createNewCourse() -> init process, body {}", this.objectMapper.writeValueAsString(courseDto));
 
-        CourseDto savedCourse = this.save(CourseUtils.convertDtoToEntity(courseDto));
+        Course course = Course.builder()
+                .courseName(courseDto.getCourseName())
+                .courseType(courseDto.getCourseType())
+                .build();
 
+        this.save(course);
 
         log.info("CourseService.createNewCourse() -> finish process, body {}", this.objectMapper.writeValueAsString(courseDto));
 
-        return savedCourse;
+        return CourseUtils.convertEntityToDto(course);
     }
 
     public List<Course> getAllCourses(){
@@ -91,13 +93,11 @@ public class CourseService {
         return CourseUtils.convertEntityToDto(course);
     }
 
-    public CourseDto save(Course course) throws JsonProcessingException {
+    public void save(Course course) throws JsonProcessingException {
         log.info("CourseService.save() -> init process, body {}", this.objectMapper.writeValueAsString(course));
 
         this.courseRepository.save(course);
 
         log.info("CourseService.save() -> finish process, body {}", this.objectMapper.writeValueAsString(course));
-
-        return CourseUtils.convertEntityToDto(course);
     }
 }

@@ -1,9 +1,11 @@
 package br.com.univillecalendar.model;
 
 import br.com.univillecalendar.model.enums.CourseEnum;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +21,8 @@ public class Course {
     private UUID courseId = UUID.randomUUID();
     private String courseName;
     private CourseEnum courseType;;
-    @ManyToMany(cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinTable(name = "course")
-    private List<Subject> subjects;
+    @Nullable
+    private List<Subject> subjects = new ArrayList<>();
 }
