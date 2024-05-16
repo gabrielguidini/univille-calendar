@@ -33,10 +33,6 @@ public class TeacherService {
 
         Teacher savedTeacher = this.save(TeacherUtils.convertDtoToEntity(teacher));
 
-        if (teacherRepository.findById(savedTeacher.getTeacherId()).isPresent()) {
-            throw new GenericException("Teacher Already Exists");
-        }
-
         log.info("TeacherService.createNewTeacher() -> finish process, teacherId {}", this.objectMapper.writeValueAsString(savedTeacher));
 
         return teacher;

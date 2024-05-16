@@ -16,13 +16,6 @@ import java.util.UUID;
 
 @RestController("/user")
 @Slf4j
-    /*
-    todo:
-        -- create -> no testing done
-        -- delete -> no testing done
-        -- update
-        -- get -> no testing done
-     */
 public class StudentController {
 
     private final StudentService studentService;
