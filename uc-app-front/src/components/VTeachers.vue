@@ -1,55 +1,47 @@
-<!-- <template>
-  <v-card>
-    <v-card-title>Professores</v-card-title>
-    <v-card></v-card>
-  </v-card>
-  <v-table height="100">
-    <thead class="thead-table">
-      <tr>
-        <th class="text-left">Discplina</th>
-        <th class="text-left">Hora Aula</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(teacher, index) in this.teachers" :key="index">
-        <td>{{ teacher.teacherFirstName }} {{ teacher.teacherLastName }}</td>
-        <td>{{ teacher.teacherEmail }}</td>
-      </tr>
-    </tbody>
-  </v-table>
-</template> -->
-
 <template>
-  <div class="container" v-for="(teacher, index) in this.teachers" :key="index">
-    <v-card width="250">
+  <v-col
+    cols="12"
+    sm="6"
+    md="4"
+    lg="3"
+    v-for="(teacher, index) in this.teachers"
+    :key="index"
+  >
+    <v-card flat class="border rounded-lg">
       <v-img
-        class="align-end text-white"
-        height="200"
-        src="https://pbs.twimg.com/profile_images/1450817790022144008/MmPArZ2C_400x400.jpg"
-        cover
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
       >
       </v-img>
 
-      <v-card-text>
-        <v-card-title
-          >{{ teacher.teacherFirstName }}
-          {{ teacher.teacherLastName }}</v-card-title
-        >
-        <v-card-subtitle>{{ teacher.teacherEmail }}</v-card-subtitle>
-        <v-card-subtitle>ainda</v-card-subtitle>
-      </v-card-text>
+      <v-card-title
+        >{{ teacher.teacherFirstName }}
+        {{ teacher.teacherLastName }}</v-card-title
+      >
+      <v-card-subtitle>{{ teacher.teacherEmail }}</v-card-subtitle>
+
+      <v-divider></v-divider>
+
+      <v-card-actions class="d-flex justify-end">
+        <VModalUpdateTeacher />
+      </v-card-actions>
     </v-card>
-  </div>
+  </v-col>
 </template>
 
 <script>
 import axios from "axios";
 
+import VModalUpdateTeacher from "./VModal/VModalUpdateTeacher.vue";
+
 export default {
   name: "VTeachers",
+  components: {
+    VModalUpdateTeacher,
+  },
   data() {
     return {
       teachers: [],
+      EditSelectedTeacher: {},
     };
   },
   mounted() {
@@ -66,8 +58,9 @@ export default {
           console.log(error);
         });
     },
+    selectedTeacher(teacher) {
+      this.EditSelectedTeacher = teacher;
+    },
   },
 };
 </script>
-
-<style scoped></style>

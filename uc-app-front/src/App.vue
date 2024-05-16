@@ -1,21 +1,20 @@
-<script setup>
-import VSidebar from "./components/VSidebar.vue";
-</script>
-
 <template>
-  <main class="container">
-    <div class="div-side">
-      <VSidebar />
-    </div>
-    <div class="div">
-      <router-view />
-    </div>
-  </main>
+  <v-app theme="dark">
+    <VHeader />
+    <router-view></router-view>
+  </v-app>
 </template>
 
-<style>
-.container {
-  display: flex;
-  flex-direction: row;
-}
-</style>
+<script>
+import VTeachers from "./components/VTeachers.vue";
+import VHeader from "./components/VHeader.vue";
+
+export default {
+  components: {
+    VTeachers,
+    VHeader,
+  },
+};
+</script>
+
+<style></style>
