@@ -1,6 +1,7 @@
 package br.com.univillecalendar.service;
 
 import br.com.univillecalendar.dto.StudentDto;
+import br.com.univillecalendar.dto.StudentFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.exceptions.StudentNotFoundException;
 import br.com.univillecalendar.model.Student;
@@ -56,6 +57,23 @@ public class StudentService {
         this.studentRepository.delete(student);
 
         log.info("StudentController.deleteStudent() -> finish process, studentId {}", this.objectMapper.writeValueAsString(student));
+    }
+
+    public StudentDto updateStudent(UUID studentId, StudentFormUpdate studentFormUpdate) throws JsonProcessingException {
+        log.info("StudentService.updateStudent() -> init process, studentId{}", studentId);
+
+        Student student = this.studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException(STUDENT_NOT_FOUND_MESSAGE));
+        student.setStudentFirstName(studentFormUpdate.getStudentFirstName());
+        student.setStudentLastName(studentFormUpdate.getStudentLastName());
+        student.setStudentEmail(studentFormUpdate.getStudentEmail());
+        student.setStudentPhone(studentFormUpdate.getStudentPhone());
+        student.setCourse(studentFormUpdate.getCourse());
+
+        this.save(student);
+
+        log.info("StudentService.updateStudent() -> finish process, studentId{}, studentUpdated{}", studentId, this.objectMapper.writeValueAsString(student));
+
+        return StudentUtils.convertEntityToDto(student);
     }
 
     public void save(Student student) {
