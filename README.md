@@ -12,7 +12,7 @@
 
 **Client:** Vue e Vuetify
 **Server:** Java e Spring
-**Daba Base:** Postgres
+**Data Base:** Postgres
 
 ## Project Setup
 
