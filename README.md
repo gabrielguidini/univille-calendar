@@ -10,9 +10,9 @@
 
 ## Tech Stack
 
-**Client:** Vue e Vuetify
-**Server:** Java e Spring
-**Data Base:** Postgres
+- **Client:** Vue e Vuetify
+- **Server:** Java e Spring
+- **Data Base:** Postgres
 
 ## Project Setup
 
