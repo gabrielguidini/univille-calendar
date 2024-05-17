@@ -1,13 +1,8 @@
 package br.com.univillecalendar.utils;
 
 import br.com.univillecalendar.dto.CourseDto;
-import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.model.Course;
-import br.com.univillecalendar.model.Teacher;
 import lombok.experimental.UtilityClass;
-
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class CourseUtils {
@@ -17,7 +12,6 @@ public class CourseUtils {
         return CourseDto.builder()
                 .courseName(course.getCourseName())
                 .courseType(course.getCourseType())
-                .subjects(course.getSubjects() == null ? null : course.getSubjects().stream().map(SubjectUtils::convertEntityToDto).collect(Collectors.toList()))
                 .build();
     }
 
@@ -26,7 +20,6 @@ public class CourseUtils {
         return Course.builder()
                 .courseName(courseDto.getCourseName())
                 .courseType(courseDto.getCourseType())
-                .subjects(courseDto.getSubjects() == null ? null : courseDto.getSubjects().stream().map(SubjectUtils::convertDtoToEntity).collect(Collectors.toList()))
                 .build();
     }
 }

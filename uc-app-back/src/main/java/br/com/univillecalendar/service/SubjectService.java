@@ -21,7 +21,7 @@ import java.util.UUID;
 public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final ObjectMapper objectMapper;
-    private final String SUBJECT_NOT_FOUND = "Subject Not Found";
+    private static final String SUBJECT_NOT_FOUND = "Subject Not Found";
 
     public SubjectService(SubjectRepository subjectRepository, ObjectMapper objectMapper) {
         this.subjectRepository = subjectRepository;

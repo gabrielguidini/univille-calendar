@@ -1,6 +1,5 @@
 package br.com.univillecalendar.service;
 
-import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
@@ -22,7 +21,7 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final ObjectMapper objectMapper;
-    private final String TEACHER_NOT_FOUND_MESSAGE = "Teacher Not Found";
+    private static final String TEACHER_NOT_FOUND_MESSAGE = "Teacher Not Found";
 
     public TeacherService(TeacherRepository teacherRepository, ObjectMapper objectMapper) {
         this.teacherRepository = teacherRepository;
@@ -56,7 +55,7 @@ public class TeacherService {
 
         log.info("TeacherController.getTeacherById() -> init process teacherId {}", teacherId);
 
-        return this.teacherRepository.findById(teacherId).orElseThrow(() -> new GenericException("Teacher Not Found"));
+        return this.teacherRepository.findById(teacherId).orElseThrow(() -> new GenericException(TEACHER_NOT_FOUND_MESSAGE));
     }
 
     public void deleteTeacher(UUID teacherId) throws JsonProcessingException {

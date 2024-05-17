@@ -1,10 +1,10 @@
 package br.com.univillecalendar.model;
 
-import br.com.univillecalendar.dto.TeacherDto;
 import br.com.univillecalendar.model.enums.DayWeekEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +22,8 @@ public class Subject {
     private String startingTime;
     private String endingTime;
     private List<DayWeekEnum> daysWeek;
+    @OneToOne
+    private Course course;
     @OneToOne
     private Teacher teachers;
 

@@ -21,9 +21,9 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final ObjectMapper objectMapper;
-    private final String NOT_FOUND_EXCEPTION = "Course Not Found";
+    private static final String NOT_FOUND_EXCEPTION = "Course Not Found";
 
-    public CourseService(CourseRepository courseRepository, SubjectService subjectService, ObjectMapper objectMapper) {
+    public CourseService(CourseRepository courseRepository, ObjectMapper objectMapper) {
         this.courseRepository = courseRepository;
         this.objectMapper = objectMapper;
     }
@@ -70,9 +70,9 @@ public class CourseService {
     public void deleteCourse(UUID courseId){
         log.info("CourseService.deleteCourse() -> init process, courseId {}", courseId);
 
-        this.courseRepository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(NOT_FOUND_EXCEPTION));
+        Course course = this.courseRepository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(NOT_FOUND_EXCEPTION));
 
-        this.courseRepository.deleteById(courseId);
+        this.courseRepository.delete(course);
 
         log.info("CourseService.deleteCourse() -> finish process, courseId {}", courseId);
     }
@@ -83,7 +83,6 @@ public class CourseService {
         Course course = this.courseRepository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(NOT_FOUND_EXCEPTION));
 
         course.setCourseName(courseDto.getCourseName());
-        course.setSubjects(courseDto.getSubjects().stream().map(SubjectUtils::convertDtoToEntity).collect(Collectors.toList()));
         course.setCourseType(courseDto.getCourseType());
 
         this.save(course);
