@@ -36,7 +36,7 @@ out/
 
 ### VS Code ###
 .DS_Store
-node_modules/
+/uc-app-front/node_modules/
 .env
 .knit
 knit.lock
