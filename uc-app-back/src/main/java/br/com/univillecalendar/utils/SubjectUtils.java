@@ -4,8 +4,6 @@ import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.model.Subject;
 import lombok.experimental.UtilityClass;
 
-import java.util.Optional;
-
 @UtilityClass
 public class SubjectUtils {
 

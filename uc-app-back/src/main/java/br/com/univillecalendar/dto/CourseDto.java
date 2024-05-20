@@ -4,8 +4,6 @@ import br.com.univillecalendar.model.enums.CourseEnum;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * DTO for {@link br.com.univillecalendar.model.Course}

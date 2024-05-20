@@ -1,6 +1,5 @@
 package br.com.univillecalendar.controller;
 
-import br.com.univillecalendar.dto.CourseDto;
 import br.com.univillecalendar.dto.ScheduleDto;
 import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.model.Subject;
@@ -21,11 +20,9 @@ import java.util.UUID;
 public class SubjectController {
 
     private final SubjectService subjectService;
-    private final ObjectMapper objectMapper;
 
     public SubjectController (SubjectService subjectService, ObjectMapper objectMapper) {
         this.subjectService = subjectService;
-        this.objectMapper = objectMapper;
     }
 
     @PostMapping("/createSubject")

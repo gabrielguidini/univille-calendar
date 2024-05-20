@@ -61,7 +61,7 @@ public class TeacherController implements TeacherControllerDocumentation {
     @GetMapping("/{teacherId}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Teacher getTeacherById(@PathVariable UUID teacherId) throws JsonProcessingException {
+    public Teacher getTeacherById(@PathVariable UUID teacherId) {
 
         log.info("TeacherController.getTeacherById() -> init process, teacherId {}", teacherId);
         try {

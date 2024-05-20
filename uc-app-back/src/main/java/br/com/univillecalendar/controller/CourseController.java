@@ -6,7 +6,6 @@ import br.com.univillecalendar.exceptions.CourseNotFoundException;
 import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.model.Course;
 import br.com.univillecalendar.service.CourseService;
-import br.com.univillecalendar.utils.CourseUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -83,7 +82,7 @@ public class CourseController implements CourseControllerDocuementation {
 
     @PutMapping("/updateCourse/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCourse(@PathVariable UUID courseId, @RequestBody CourseDto course) throws JsonProcessingException {
+    public void updateCourse(@PathVariable UUID courseId) {
         log.info("CourseController.updateCourse() -> init process, courseId {}", courseId);
 
         try {
