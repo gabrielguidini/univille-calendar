@@ -1,6 +1,6 @@
 <template>
   <v-app theme="dark">
-    <VHeader v-if="isLogged" />
+    <VHeader />
     <router-view></router-view>
   </v-app>
 </template>

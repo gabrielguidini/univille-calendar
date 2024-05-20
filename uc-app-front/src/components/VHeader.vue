@@ -39,11 +39,6 @@
     <v-app-bar-title>Univille Calendar</v-app-bar-title>
 
     <template #append>
-      <v-btn icon class="mr-2">
-        <v-badge content="10" color="info">
-          <v-icon icon="mdi-bell-outline"></v-icon>
-        </v-badge>
-      </v-btn>
       <v-list width="200">
         <v-list-item
           prepend-avatar="https://media.licdn.com/dms/image/D4D03AQGYoQ8J6bk_5g/profile-displayphoto-shrink_800_800/0/1693415798903?e=1720656000&v=beta&t=TB7C-Xrs39L5qPaJ8wbvWDQr1bfHthPOTZ3XyxRxKkE"

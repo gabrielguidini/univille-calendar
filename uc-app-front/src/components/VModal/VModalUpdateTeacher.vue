@@ -6,7 +6,6 @@
         variant="flat"
         color="primary"
         prepend-icon="mdi-pencil"
-        @click="selectedTeacher(teacher)"
       >
         Editar
       </v-btn>
@@ -63,8 +62,8 @@
             v-bind="activatorProps"
             variant="flat"
             color="success"
-            prepend-icon="mdi-content-save"
-            @click="save"
+            prepend-icon="mdi-content-create"
+            @click="edit"
             >Atualizar</v-btn
           >
           <v-btn
@@ -72,7 +71,7 @@
             variant="flat"
             color="error"
             prepend-icon="mdi-delete-forever"
-            @click="dialog = false"
+            @click="remover"
             >Excluir</v-btn
           >
 
@@ -94,11 +93,10 @@
 import axios from "axios";
 
 export default {
+  name: "VModalUpdateTeacher",
+  emits: ["deleteTeachers", "editTeachers"],
   props: {
     selectedTeacher: Object,
-    teacherFirstName: String,
-    teacherLastName: String,
-    teacherEmail: String,
   },
   data() {
     return {
@@ -117,24 +115,28 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.teacherFirstName = this.selectedTeacher.teacherFirstName;
+    this.teacherLastName = this.selectedTeacher.teacherLastName;
+    this.teacherEmail = this.selectedTeacher.teacherEmail;
+    this.teacherId = this.selectedTeacher.teacherId;
+  },
   methods: {
-    async save() {
-      if (this.$refs.form.validate() && this.valid) {
-        try {
-          const response = await axios.put(
-            "http://localhost:8080/createTeacher",
-            {
-              teacherFirstName: this.teacherFirstName,
-              teacherLastName: this.teacherLastName,
-              teacherEmail: this.teacherEmail,
-            }
-          );
+    remover() {
+      this.$emit("deleteTeachers", this.teacherId);
 
-          this.$emit("show-snackbar");
+      this.dialog = false;
+    },
 
-          this.dialog = false;
-        } catch (error) {}
-      }
+    edit() {
+      this.$emit("editTeachers", {
+        teacherId: this.teacherId,
+        teacherFirstName: this.teacherFirstName,
+        teacherLastName: this.teacherLastName,
+        teacherEmail: this.teacherEmail,
+      });
+
+      this.dialog = false;
     },
   },
 };
