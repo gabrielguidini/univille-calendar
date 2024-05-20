@@ -1,7 +1,6 @@
 package br.com.univillecalendar.controller.documentation;
 
 import br.com.univillecalendar.dto.TeacherDto;
-import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.model.Teacher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,6 +75,6 @@ public interface TeacherControllerDocumentation {
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
-    TeacherDto updateTeacher(UUID teacherId, TeacherFormUpdate teacherFormUpdate) throws JsonProcessingException;
+    TeacherDto updateTeacher(UUID teacherId, TeacherDto teacherFormUpdate) throws JsonProcessingException;
 
 }

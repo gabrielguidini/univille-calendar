@@ -1,8 +1,6 @@
 package br.com.univillecalendar.service;
 
-import br.com.univillecalendar.controller.documentation.TeacherControllerDocumentation;
 import br.com.univillecalendar.dto.TeacherDto;
-import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.exceptions.TeacherNotFoundException;
 import br.com.univillecalendar.model.Teacher;
@@ -22,7 +20,7 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final ObjectMapper objectMapper;
-    private final String TEACHER_NOT_FOUND_MESSAGE = "Teacher Not Found";
+    private static final String TEACHER_NOT_FOUND_MESSAGE = "Teacher Not Found";
 
     public TeacherService(TeacherRepository teacherRepository, ObjectMapper objectMapper) {
         this.teacherRepository = teacherRepository;
@@ -32,10 +30,6 @@ public class TeacherService {
     public TeacherDto createNewTeacher(TeacherDto teacher) throws JsonProcessingException {
 
         Teacher savedTeacher = this.save(TeacherUtils.convertDtoToEntity(teacher));
-
-        if (teacherRepository.findById(savedTeacher.getTeacherId()).isPresent()) {
-            throw new GenericException("Teacher Already Exists");
-        }
 
         log.info("TeacherService.createNewTeacher() -> finish process, teacherId {}", this.objectMapper.writeValueAsString(savedTeacher));
 
@@ -60,7 +54,7 @@ public class TeacherService {
 
         log.info("TeacherController.getTeacherById() -> init process teacherId {}", teacherId);
 
-        return this.teacherRepository.findById(teacherId).orElseThrow(() -> new GenericException("Teacher Not Found"));
+        return this.teacherRepository.findById(teacherId).orElseThrow(() -> new GenericException(TEACHER_NOT_FOUND_MESSAGE));
     }
 
     public void deleteTeacher(UUID teacherId) throws JsonProcessingException {
@@ -74,14 +68,14 @@ public class TeacherService {
 
     }
 
-    public TeacherDto updateTeacher(UUID teacherId, TeacherFormUpdate teacherFormUpdate) throws JsonProcessingException {
+    public TeacherDto updateTeacher(UUID teacherId, TeacherDto teacherDto) throws JsonProcessingException {
         log.info("TeacherService.updateTeacher() -> init process, teacherId {}", teacherId);
 
         Teacher teacher = this.teacherRepository.findById(teacherId).orElseThrow(() -> new TeacherNotFoundException(TEACHER_NOT_FOUND_MESSAGE));
 
-        teacher.setTeacherFirstName(teacherFormUpdate.getTeacherFirstName());
-        teacher.setTeacherLastName(teacherFormUpdate.getTeacherLastName());
-        teacher.setTeacherEmail(teacherFormUpdate.getTeacherEmail());
+        teacher.setTeacherFirstName(teacherDto.getTeacherFirstName());
+        teacher.setTeacherLastName(teacherDto.getTeacherLastName());
+        teacher.setTeacherEmail(teacherDto.getTeacherEmail());
 
         this.save(teacher);
 

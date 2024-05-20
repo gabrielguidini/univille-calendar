@@ -1,7 +1,7 @@
 package br.com.univillecalendar.controller;
 
+import br.com.univillecalendar.dto.ScheduleDto;
 import br.com.univillecalendar.dto.SubjectDto;
-import br.com.univillecalendar.dto.SubjectFormUpdate;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.service.SubjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,25 +14,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController("/subject")
+@RestController()
 @Slf4j
-
+@RequestMapping("/subject")
 public class SubjectController {
 
     private final SubjectService subjectService;
-    private final ObjectMapper objectMapper;
 
     public SubjectController (SubjectService subjectService, ObjectMapper objectMapper) {
         this.subjectService = subjectService;
-        this.objectMapper = objectMapper;
     }
 
     @PostMapping("/createSubject")
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public SubjectDto createNewSubject(@RequestBody SubjectDto subject){
+    public Subject createNewSubject(@RequestBody SubjectDto subject) throws JsonProcessingException {
 
-        return subjectService.createNewSubject(subject);
+        return subjectService.createNewBaseSubject(subject);
     }
 
     @GetMapping("/allSubjects")
@@ -62,13 +60,38 @@ public class SubjectController {
         log.info("SubjectController.deleteSubject() -> finish process, subjectId {}", subjectId);
     }
 
-    @PostMapping("/updateSubject, /{subjectId}")
+    @PutMapping("/schedule/{subjectId}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public SubjectDto updateSubject(UUID subjectId, @RequestBody SubjectFormUpdate subjectFormUpdate) throws JsonProcessingException{
-        log.info("SubjectController.updateSubject() -> init process, subjectId{}, updatedSubjectId{}", subjectId, this.objectMapper.writeValueAsString(subjectFormUpdate));
+    public SubjectDto addScheduleIntoSubject(@PathVariable UUID subjectId,
+                                             @RequestBody ScheduleDto scheduleDto) throws JsonProcessingException{
 
-        return subjectService.updateSubject(subjectId,subjectFormUpdate);
+        log.info("SubjectController.updateSubject() -> init process, subjectId {}", subjectId);
+
+        return subjectService.addScheduleIntoSubject(subjectId,scheduleDto);
+    }
+
+    @PutMapping("/teacher/{subjectId}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public SubjectDto addTeacherIntoSubject(@PathVariable UUID subjectId,
+                                            @RequestParam String teacherFirstName,
+                                            @RequestParam String teacherLastName) throws JsonProcessingException {
+        log.info("SubjectController.addTeacherIntoSubject() -> init process, subjectId {}, teacherFirstName {}", subjectId, teacherFirstName);
+
+        return this.subjectService.addTeacherIntoSubject(subjectId, teacherFirstName, teacherLastName);
+
+    }
+
+    @PutMapping("/course/{subjectId}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public SubjectDto addCourseIntoSubject(@PathVariable UUID subjectId,
+                                           @RequestParam String courseName) throws JsonProcessingException {
+
+        log.info("SubjectController.addCourseIntoSubject() -> init process, subjectId {}", subjectId);
+
+        return this.subjectService.addCourseIntoSubject(subjectId,courseName);
     }
 
 }

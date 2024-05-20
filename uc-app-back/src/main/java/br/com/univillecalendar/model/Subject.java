@@ -1,7 +1,5 @@
 package br.com.univillecalendar.model;
 
-import br.com.univillecalendar.dto.TeacherDto;
-import br.com.univillecalendar.model.enums.DayWeekEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +17,11 @@ public class Subject {
     @Id @Builder.Default
     private UUID subjectId = UUID.randomUUID();
     private String subjectName;
-    private String startingTime;
-    private String endingTime;
-    private List<DayWeekEnum> daysWeek;
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Teacher teachers;
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Schedule> schedules;
+    @OneToOne
+    private Course course;
+    @OneToOne
+    private Teacher teacher;
 
 }
