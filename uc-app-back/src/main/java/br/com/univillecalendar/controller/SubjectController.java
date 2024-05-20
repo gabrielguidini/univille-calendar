@@ -25,7 +25,7 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    @PostMapping("/createSubject")
+    @PostMapping()
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public Subject createNewSubject(@RequestBody SubjectDto subject) throws JsonProcessingException {
@@ -33,7 +33,7 @@ public class SubjectController {
         return subjectService.createNewBaseSubject(subject);
     }
 
-    @GetMapping("/allSubjects")
+    @GetMapping("/all")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public List<Subject> getAllSubjects(){

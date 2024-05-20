@@ -29,7 +29,7 @@ public class CourseController implements CourseControllerDocuementation {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping("/createNewCourse")
+    @PostMapping()
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public CourseDto createNewCourse(@RequestBody CourseDto courseDto) throws JsonProcessingException {
@@ -43,7 +43,7 @@ public class CourseController implements CourseControllerDocuementation {
         }
     }
 
-    @GetMapping("/getCourses")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<Course> getAllCourses() {
         log.info("CourseController.getAllCourses() -> init process");
@@ -52,7 +52,7 @@ public class CourseController implements CourseControllerDocuementation {
 
     }
 
-    @GetMapping("/getCourses/{courseId}")
+    @GetMapping("/{courseId}")
     @ResponseStatus(HttpStatus.OK)
     public Course getCourseById(@PathVariable UUID courseId) {
         log.info("CourseController.getCourseById() -> init process, courseId {}", courseId);
@@ -66,7 +66,7 @@ public class CourseController implements CourseControllerDocuementation {
 
     }
 
-    @DeleteMapping("/deleteCouse/{courseId}")
+    @DeleteMapping("/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteCourse(@PathVariable UUID courseId) {
         log.info("CourseController.deleteCourse() -> init process, courseId {}", courseId);
@@ -80,7 +80,7 @@ public class CourseController implements CourseControllerDocuementation {
         }
     }
 
-    @PutMapping("/updateCourse/{courseId}")
+    @PutMapping("/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateCourse(@PathVariable UUID courseId) {
         log.info("CourseController.updateCourse() -> init process, courseId {}", courseId);

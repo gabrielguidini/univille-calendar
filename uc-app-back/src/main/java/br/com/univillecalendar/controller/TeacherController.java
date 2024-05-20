@@ -29,7 +29,7 @@ public class TeacherController implements TeacherControllerDocumentation {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping("/createTeacher")
+    @PostMapping()
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public TeacherDto createNewTeacher(@RequestBody TeacherDto teacher) throws JsonProcessingException {
@@ -44,7 +44,7 @@ public class TeacherController implements TeacherControllerDocumentation {
 
     }
 
-    @GetMapping("/allTeachers")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<Teacher> getAllTeachers() throws JsonProcessingException{
         log.info("TeacherController.getAllTeachers() -> init process");
@@ -89,7 +89,7 @@ public class TeacherController implements TeacherControllerDocumentation {
 
     }
 
-    @PutMapping("/updateTeacher/{teacherId}")
+    @PutMapping("/{teacherId}")
     @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     public TeacherDto updateTeacher(@PathVariable UUID teacherId, @RequestBody TeacherDto teacherDto) throws JsonProcessingException {
