@@ -1,7 +1,6 @@
 package br.com.univillecalendar.service;
 
 import br.com.univillecalendar.dto.TeacherDto;
-import br.com.univillecalendar.dto.TeacherFormUpdate;
 import br.com.univillecalendar.exceptions.GenericException;
 import br.com.univillecalendar.exceptions.TeacherNotFoundException;
 import br.com.univillecalendar.model.Teacher;
@@ -69,14 +68,14 @@ public class TeacherService {
 
     }
 
-    public TeacherDto updateTeacher(UUID teacherId, TeacherFormUpdate teacherFormUpdate) throws JsonProcessingException {
+    public TeacherDto updateTeacher(UUID teacherId, TeacherDto teacherDto) throws JsonProcessingException {
         log.info("TeacherService.updateTeacher() -> init process, teacherId {}", teacherId);
 
         Teacher teacher = this.teacherRepository.findById(teacherId).orElseThrow(() -> new TeacherNotFoundException(TEACHER_NOT_FOUND_MESSAGE));
 
-        teacher.setTeacherFirstName(teacherFormUpdate.getTeacherFirstName());
-        teacher.setTeacherLastName(teacherFormUpdate.getTeacherLastName());
-        teacher.setTeacherEmail(teacherFormUpdate.getTeacherEmail());
+        teacher.setTeacherFirstName(teacherDto.getTeacherFirstName());
+        teacher.setTeacherLastName(teacherDto.getTeacherLastName());
+        teacher.setTeacherEmail(teacherDto.getTeacherEmail());
 
         this.save(teacher);
 

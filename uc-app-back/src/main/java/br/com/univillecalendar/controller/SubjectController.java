@@ -1,7 +1,8 @@
 package br.com.univillecalendar.controller;
 
+import br.com.univillecalendar.dto.CourseDto;
+import br.com.univillecalendar.dto.ScheduleDto;
 import br.com.univillecalendar.dto.SubjectDto;
-import br.com.univillecalendar.dto.SubjectFormUpdate;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.service.SubjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,14 +63,15 @@ public class SubjectController {
         log.info("SubjectController.deleteSubject() -> finish process, subjectId {}", subjectId);
     }
 
-    @PutMapping("/updateSubject/{subjectId}")
+    @PutMapping("/schedule/{subjectId}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public SubjectDto updateSubject(@PathVariable UUID subjectId,
-                                    @RequestBody SubjectFormUpdate subjectFormUpdate) throws JsonProcessingException{
-        log.info("SubjectController.updateSubject() -> init process, subjectId{}, updatedSubjectId{}", subjectId, this.objectMapper.writeValueAsString(subjectFormUpdate));
+    public SubjectDto addScheduleIntoSubject(@PathVariable UUID subjectId,
+                                             @RequestBody ScheduleDto scheduleDto) throws JsonProcessingException{
 
-        return subjectService.updateSubject(subjectId,subjectFormUpdate);
+        log.info("SubjectController.updateSubject() -> init process, subjectId {}", subjectId);
+
+        return subjectService.addScheduleIntoSubject(subjectId,scheduleDto);
     }
 
     @PutMapping("/teacher/{subjectId}")
@@ -82,6 +84,17 @@ public class SubjectController {
 
         return this.subjectService.addTeacherIntoSubject(subjectId, teacherFirstName, teacherLastName);
 
+    }
+
+    @PutMapping("/course/{subjectId}")
+    @Transactional
+    @ResponseStatus(HttpStatus.OK)
+    public SubjectDto addCourseIntoSubject(@PathVariable UUID subjectId,
+                                           @RequestParam String courseName) throws JsonProcessingException {
+
+        log.info("SubjectController.addCourseIntoSubject() -> init process, subjectId {}", subjectId);
+
+        return this.subjectService.addCourseIntoSubject(subjectId,courseName);
     }
 
 }

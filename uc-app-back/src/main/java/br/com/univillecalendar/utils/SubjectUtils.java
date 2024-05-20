@@ -4,6 +4,8 @@ import br.com.univillecalendar.dto.SubjectDto;
 import br.com.univillecalendar.model.Subject;
 import lombok.experimental.UtilityClass;
 
+import java.util.Optional;
+
 @UtilityClass
 public class SubjectUtils {
 
@@ -11,10 +13,8 @@ public class SubjectUtils {
 
         return SubjectDto.builder()
                 .subjectName(subject.getSubjectName())
-                .startingTime(subject.getStartingTime())
-                .endingTime(subject.getEndingTime())
-                .daysWeek(subject.getDaysWeek())
-                .teachers(TeacherUtils.convertEntityToDto(subject.getTeachers()) == null ? null : TeacherUtils.convertEntityToDto(subject.getTeachers()))
+                .schedules(subject.getSchedules().stream().map(ScheduleUtils::convertDtoToEntity).toList())
+                .teacher(subject.getTeacher() != null ? TeacherUtils.convertEntityToDto(subject.getTeacher()) : null)
                 .build();
 
     }
@@ -23,10 +23,8 @@ public class SubjectUtils {
 
         return Subject.builder()
                 .subjectName(subjectDto.getSubjectName())
-                .startingTime(subjectDto.getStartingTime())
-                .endingTime(subjectDto.getEndingTime())
-                .daysWeek(subjectDto.getDaysWeek())
-                .teachers(TeacherUtils.convertDtoToEntity(subjectDto.getTeachers()) == null ? null : TeacherUtils.convertDtoToEntity(subjectDto.getTeachers()))
+                .schedules(subjectDto.getSchedules().stream().map(ScheduleUtils::convertDtoToEntity).toList())
+                .teacher(subjectDto.getTeacher() != null ? TeacherUtils.convertDtoToEntity(subjectDto.getTeacher()) : null)
                 .build();
 
     }

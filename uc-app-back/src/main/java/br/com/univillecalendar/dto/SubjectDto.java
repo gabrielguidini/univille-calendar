@@ -1,5 +1,6 @@
 package br.com.univillecalendar.dto;
 
+import br.com.univillecalendar.model.Schedule;
 import br.com.univillecalendar.model.enums.DayWeekEnum;
 import lombok.*;
 
@@ -17,8 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class SubjectDto implements Serializable {
     private String subjectName;
-    private String startingTime;
-    private String endingTime;
-    private List<DayWeekEnum> daysWeek;
-    private TeacherDto teachers;
+    private List<ScheduleDto> schedules;
+    private TeacherDto teacher;
+    private CourseDto course;
 }

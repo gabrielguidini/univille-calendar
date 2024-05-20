@@ -18,5 +18,4 @@ import java.util.UUID;
 public class CourseDto implements Serializable {
     private String courseName;
     private CourseEnum courseType;
-    private List<SubjectDto> subjects;
 }

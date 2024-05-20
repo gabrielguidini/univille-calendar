@@ -39,17 +39,17 @@ public class CourseController implements CourseControllerDocuementation {
         try {
             return this.courseService.createNewBaseCourse(courseDto);
         } catch (GenericException e) {
-            log.error(e.getMessage());
+            log.error("CourseController.createNewCourse() -> error while trying to create new course, body {}, error {}", this.objectMapper.writeValueAsString(courseDto), e.getMessage());
             throw new GenericException(e.getMessage());
         }
     }
 
     @GetMapping("/getCourses")
     @ResponseStatus(HttpStatus.OK)
-    public List<CourseDto> getAllCourses() {
+    public List<Course> getAllCourses() {
         log.info("CourseController.getAllCourses() -> init process");
 
-        return courseService.getAllCourses().stream().map(CourseUtils::convertEntityToDto).toList();
+        return courseService.getAllCourses();
 
     }
 

@@ -19,12 +19,11 @@ public class Subject {
     @Id @Builder.Default
     private UUID subjectId = UUID.randomUUID();
     private String subjectName;
-    private String startingTime;
-    private String endingTime;
-    private List<DayWeekEnum> daysWeek;
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Schedule> schedules;
     @OneToOne
     private Course course;
     @OneToOne
-    private Teacher teachers;
+    private Teacher teacher;
 
 }

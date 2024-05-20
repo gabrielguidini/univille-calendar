@@ -1,13 +1,14 @@
 package br.com.univillecalendar.service;
 
+import br.com.univillecalendar.dto.ScheduleDto;
 import br.com.univillecalendar.dto.SubjectDto;
-import br.com.univillecalendar.dto.SubjectFormUpdate;
 import br.com.univillecalendar.exceptions.SubjectNotFoundException;
+import br.com.univillecalendar.model.Course;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.model.Teacher;
 import br.com.univillecalendar.repository.SubjectRepository;
+import br.com.univillecalendar.utils.ScheduleUtils;
 import br.com.univillecalendar.utils.SubjectUtils;
-import br.com.univillecalendar.utils.TeacherUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +33,9 @@ public class SubjectService {
 
         Subject subject = Subject.builder()
                 .subjectName(subjectDto.getSubjectName())
-                .startingTime(subjectDto.getStartingTime())
-                .endingTime(subjectDto.getEndingTime())
-                .daysWeek(subjectDto.getDaysWeek())
-                .teachers(null)
+                .schedules(null)
+                .teacher(null)
+                .course(null)
                 .build();
 
         this.save(subject);
@@ -64,15 +64,13 @@ public class SubjectService {
         log.info("SubjectController.deleteSubject() -> finish process, subjectId{}", this.objectMapper.writeValueAsString(subject));
     }
 
-    public SubjectDto updateSubject(UUID subjectId, SubjectFormUpdate subjectFormUpdate) throws JsonProcessingException{
+    public SubjectDto addScheduleIntoSubject(UUID subjectId,
+                                             ScheduleDto scheduleDto) throws JsonProcessingException{
         log.info("SubjectService.updateSubject() -> init process, subjectId{}", subjectId);
 
         Subject subject = this.subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
 
-        subject.setStartingTime(subjectFormUpdate.getStartingTime());
-        subject.setEndingTime(subjectFormUpdate.getEndingTime());
-        subject.setDaysWeek(subjectFormUpdate.getDaysWeek());
-        subject.setTeachers(TeacherUtils.convertDtoToEntity(subjectFormUpdate.getTeachers()));
+        subject.getSchedules().add(ScheduleUtils.convertDtoToEntity(scheduleDto));
 
         this.save(subject);
 
@@ -88,7 +86,7 @@ public class SubjectService {
 
         Teacher teacher = subjectRepository.findTeacherByName(teacherFirstName, teacherLastName);
 
-        subject.setTeachers(teacher);
+        subject.setTeacher(teacher);
 
         this.save(subject);
 
@@ -104,6 +102,23 @@ public class SubjectService {
         this.subjectRepository.save(subject);
 
         log.info("SubjectService.save() -> finish process, subject {}", this.objectMapper.writeValueAsString(subject));
+    }
+
+    public SubjectDto addCourseIntoSubject(UUID subjectId, String courseName) throws JsonProcessingException {
+
+        log.info("SubjectService.addCourseIntoSubject() -> init process, subjectId {}, courseName {}", subjectId, courseName);
+
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
+
+        Course course = subjectRepository.findCourseByName(courseName);
+
+        subject.setCourse(course);
+
+        this.save(subject);
+
+        log.info("SubjectService.addCourseIntoSubject() -> finish process, subjectId {}, courseName {}", subjectId, courseName);
+
+        return SubjectUtils.convertEntityToDto(subject);
     }
 }
 
