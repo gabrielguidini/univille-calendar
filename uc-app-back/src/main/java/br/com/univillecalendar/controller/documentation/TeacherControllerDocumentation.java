@@ -28,7 +28,7 @@ public interface TeacherControllerDocumentation {
     @Operation(summary = "Get all teachers")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Get all teacher",
+                    description = "Get all teachers",
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
@@ -51,10 +51,10 @@ public interface TeacherControllerDocumentation {
     })
     Teacher getTeacherById(UUID teacherId) throws JsonProcessingException;
 
-    @Operation(summary = "Get delete teacher by id")
+    @Operation(summary = "Delete teacher by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Get delete teacher by id",
+                    description = "Delete teacher by id",
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
@@ -64,10 +64,10 @@ public interface TeacherControllerDocumentation {
     })
     void deleteTeacher(UUID teacherId) throws JsonProcessingException;
 
-    @Operation(summary = "Get update teacher by id")
+    @Operation(summary = "Update teacher by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Get update teacher by id",
+                    description = "Update teacher by id",
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
