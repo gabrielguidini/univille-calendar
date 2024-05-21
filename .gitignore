@@ -1197,3 +1197,8 @@ cypress/videos
 /wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu/gradle-8.7-bin.zip.lck
 /wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu/gradle-8.7-bin.zip.ok
 /wrapper/dists/CACHEDIR.TAG
+/.tmp/
+/caches/
+/daemon/
+/jdks/
+/native/
