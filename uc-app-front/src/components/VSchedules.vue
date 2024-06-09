@@ -1,7 +1,3 @@
-<template>
-  <h1>horarios</h1>
-</template>
+<template></template>
 
 <script></script>
-
-<style scoped></style>

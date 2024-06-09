@@ -1,76 +1,53 @@
 <template>
-  <v-col
-    cols="12"
-    sm="6"
-    md="4"
-    lg="3"
-    v-for="(teacher, index) in this.teachers"
-    :key="index"
-  >
-    <v-card flat class="border rounded-lg">
-      <v-img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-      >
-      </v-img>
+  <v-row>
+    <v-col
+      cols="12"
+      xl="2"
+      lg="3"
+      md="4"
+      sm="4"
+      v-for="(teacher, index) in teachers"
+      :key="index"
+    >
+      <v-card flat class="rounded-lg bg-white" elevation="3">
+        <v-img :src="teacher.teacherImage"></v-img>
 
-      <v-card elevation="0">
-        <template v-slot:title>
-          {{ teacher.teacherFirstName }} {{ teacher.teacherLastName }}</template
-        >
+        <v-card elevation="0" color="transparent">
+          <template v-slot:title>
+            {{ teacher.teacherFirstName }} {{ teacher.teacherLastName }}
+          </template>
+          <template v-slot:subtitle>
+            {{ teacher.teacherEmail }}
+          </template>
+        </v-card>
 
-        <template v-slot:subtitle> {{ teacher.teacherEmail }} </template>
+        <v-divider></v-divider>
 
-        <template v-slot:text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-          ratione debitis quis est labore voluptatibus!
-        </template>
+        <v-card-actions class="d-flex">
+          <VModalUpdateTeacher
+            :selectedTeacher="teacher"
+            @deleteTeachers="deleteTeachers"
+            @editTeachers="editTeachers"
+          />
+        </v-card-actions>
       </v-card>
+    </v-col>
 
-      <v-divider></v-divider>
-
-      <v-card-actions class="d-flex">
-        <VModalUpdateTeacher
-          :selectedTeacher="teacher"
-          @deleteTeachers="deleteTeachers"
-          @editTeachers="editTeachers"
-        />
-      </v-card-actions>
-    </v-card>
-  </v-col>
-  <v-col cols="12" sm="6" md="4" lg="3" v-if="isLoading">
-    <v-skeleton-loader
-      class="mx-auto border"
-      max-width="300"
-      type="image, article, button"
-    ></v-skeleton-loader>
-  </v-col>
-  <v-col cols="12" sm="6" md="4" lg="3" v-if="isLoading">
-    <v-skeleton-loader
-      class="mx-auto border"
-      max-width="300"
-      type="image, article, button"
-    ></v-skeleton-loader>
-  </v-col>
-  <v-col cols="12" sm="6" md="4" lg="3" v-if="isLoading">
-    <v-skeleton-loader
-      class="mx-auto border"
-      max-width="300"
-      type="image, article, button"
-    ></v-skeleton-loader>
-  </v-col>
-  <v-col cols="12" sm="6" md="4" lg="3" v-if="isLoading">
-    <v-skeleton-loader
-      class="mx-auto border"
-      max-width="300"
-      type="image, article, button"
-    ></v-skeleton-loader>
-  </v-col>
+    <v-col cols="12" xl="2" lg="3" md="4" sm="4" v-if="isLoading">
+      <v-skeleton-loader
+        class="border"
+        type="image, article, button"
+        elevation="2"
+      ></v-skeleton-loader>
+    </v-col>
+    <!-- Repita o skeleton-loader conforme necessário -->
+  </v-row>
 </template>
 
 <script>
 import axios from "axios";
-
 import VModalUpdateTeacher from "./VModal/VModalUpdateTeacher.vue";
+import emitter from "@/events/emiter.js";
 
 export default {
   name: "VTeachers",
@@ -80,19 +57,24 @@ export default {
   data() {
     return {
       teachers: [],
-      editSelectedTeacher: {},
       isLoading: false,
     };
   },
+
   mounted() {
     this.getTeachers();
+
+    emitter.on("newTeacherCreated", (teacher) => {
+      this.teachers.push(teacher);
+    });
   },
   methods: {
     getTeachers() {
       this.isLoading = true;
+
       setTimeout(() => {
         axios
-          .get("http://localhost:8080/allTeachers")
+          .get("http://localhost:8080/teacher/all")
           .then((response) => {
             this.teachers = response.data;
           })
@@ -102,14 +84,16 @@ export default {
         this.isLoading = false;
       }, 1000);
     },
+
     deleteTeachers(Id) {
       axios
-        .delete(`http://localhost:8080/${Id}`)
+        .delete(`http://localhost:8080/teacher/${Id}`)
         .then((response) => {
           this.teachers = this.teachers.filter(
             (teacher) => teacher.teacherId !== Id
           );
         })
+
         .catch((error) => {
           console.log(error);
         });
@@ -117,7 +101,8 @@ export default {
 
     editTeachers(teacherParams) {
       axios
-        .put(`http://localhost:8080/updateTeacher/${teacherParams.teacherId}`, {
+        .put(`http://localhost:8080/teacher/${teacherParams.teacherId}`, {
+          teacherImage: teacherParams.teacherImage,
           teacherFirstName: teacherParams.teacherFirstName,
           teacherLastName: teacherParams.teacherLastName,
           teacherEmail: teacherParams.teacherEmail,
@@ -128,6 +113,7 @@ export default {
           );
 
           if (teacherFound) {
+            teacherFound.teacherImage = teacherParams.teacherImage;
             teacherFound.teacherFirstName = teacherParams.teacherFirstName;
             teacherFound.teacherLastName = teacherParams.teacherLastName;
             teacherFound.teacherEmail = teacherParams.teacherEmail;

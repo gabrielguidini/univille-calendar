@@ -1,33 +1,35 @@
 <template>
-  <v-main>
+  <v-main class="bg-grey-lighten-2">
     <v-container class="d-flex flex-column ga-5">
-      <h1>Disciplinas</h1>
-
-      <v-card
-        class="d-flex justify-start pa-2"
-        color="transparent"
-        elevation="0"
-      >
+      <v-card flat class="border rounded-lg">
+        <v-card
+          class="d-flex justify-space-between align-center pa-2"
+          color="transparent"
+          elevation="0"
+        >
+          <h1>Disciplinas</h1>
+          <VModalCreateSubject />
+        </v-card>
       </v-card>
 
-      <v-card class="d-flex justify-end pa-2" color="transparent" elevation="0">
-        <VModalCreateSubject />
+      <v-card flat class="border rounded-lg">
+        <v-container class="d-flex flex-column ga-5">
+          <v-row class="pa-6">
+            <VSubject />
+          </v-row>
+        </v-container>
       </v-card>
-
-      <v-row>
-        <VSubjects />
-      </v-row>
     </v-container>
   </v-main>
 </template>
 
 <script>
-import VSubjects from "../components/VSubjects.vue";
+import VSubject from "@/components/VSubject.vue";
 import VModalCreateSubject from "../components/VModal/VModalCreateSubject.vue";
 
 export default {
   components: {
-    VSubjects,
+    VSubject,
     VModalCreateSubject,
   },
 };

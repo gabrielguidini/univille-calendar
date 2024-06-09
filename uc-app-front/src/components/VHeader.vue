@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer flat v-model="toggleMenu" class="border">
+  <v-navigation-drawer
+    flat
+    v-model="toggleMenu"    
+    color="grey-lighten-5"
+    class="border-none"
+  >
     <v-list density="compact" nav>
       <v-list-item
         prepend-icon="mdi-home"
@@ -34,19 +39,9 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-app-bar flat class="border-b">
+  <v-app-bar flat color="grey-lighten-5">
     <v-app-bar-nav-icon @click="toggleMenu = !toggleMenu"> </v-app-bar-nav-icon>
     <v-app-bar-title>Univille Calendar</v-app-bar-title>
-
-    <template #append>
-      <v-list width="200">
-        <v-list-item
-          prepend-avatar="https://media.licdn.com/dms/image/D4D03AQGYoQ8J6bk_5g/profile-displayphoto-shrink_800_800/0/1693415798903?e=1720656000&v=beta&t=TB7C-Xrs39L5qPaJ8wbvWDQr1bfHthPOTZ3XyxRxKkE"
-          subtitle="leandropinheirorosa1@hotmail.com"
-          title="Leandro Pinheiro"
-        ></v-list-item>
-      </v-list>
-    </template>
   </v-app-bar>
 </template>
 
@@ -59,3 +54,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>

@@ -1,7 +1,7 @@
 <template class="d-flex">
-  <v-main>
+  <v-main class="bg-grey-lighten-2">
     <v-container class="d-flex flex-column justify-center align-center">
-      <v-col cols="5" md="5" sm="12" class="d-flex flex-column ga-10">
+      <v-col cols="12" lg="4" md="6" sm="8" class="d-flex flex-column ga-10">
         <h1>Bem-vindo</h1>
         <v-card class="border">
           <v-card-title class="d-flex pl-5 pr-5 pa-5">Login</v-card-title>

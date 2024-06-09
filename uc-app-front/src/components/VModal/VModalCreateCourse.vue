@@ -3,34 +3,33 @@
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
         v-bind="activatorProps"
-        density="compact"
-        icon="mdi-plus"
-        size="large"
-        color="primary"
+        text="Novo"
+        variant="flat"
+        color="blue"
+        prepend-icon="mdi-plus"
       >
+        Novo
       </v-btn>
     </template>
 
     <template v-slot:default>
-      <v-card class="">
-        <v-container class="bg-grey-darken-4">
+      <v-card class="border rounded-lg">
+        <v-container>
           <v-card
             elevation="0"
             class="d-flex flex-row align-center justify-space-between"
-            color="transparent"
           >
-            <h2>Nova disciplina</h2>
+            <h2>Novo curso</h2>
 
             <v-btn
               elevation="0"
               density="compact"
               icon="mdi-close"
-              size="large"
-              color="grey-darken-4"
               @click="dialog = false"
             ></v-btn>
           </v-card>
         </v-container>
+
         <v-divider></v-divider>
 
         <v-card-text>
@@ -39,11 +38,22 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="subjectName"
-                    label="Disciplina"
+                    label="Nome do curso"
+                    v-model="courseName"
                     variant="outlined"
                     required
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-select
+                    label="Tipo do curso"
+                    :items="courseTypeList"
+                    item-text="text"
+                    item-value="value"
+                    v-model="courseType"
+                    variant="outlined"
+                    required
+                  ></v-select>
                 </v-col>
               </v-row>
             </v-container>
@@ -72,33 +82,34 @@ import axios from "axios";
 import emitter from "@/events/emiter.js";
 
 export default {
-  name: "VModalCreateSubject",
+  name: "VModalCreateTeacher",
   data() {
     return {
       dialog: false,
       valid: false,
-      subjectName: "",
+      courseName: "",
+      courseType: "",
+      courseTypeList: ["COURSE_TYPE_BACHELOR", "COURSE_TYPE_TECHNICAL"],
     };
   },
   methods: {
     async save() {
       try {
-        const response = await axios.post("http://localhost:8080/subject", {
-          subjectName: this.subjectName,
+        const response = await axios.post("http://localhost:8080/course", {
+          courseName: this.courseName,
+          courseType: this.courseType,
         });
 
-        // Emitindo o evento com os dados da nova subject
-        emitter.emit("newSubjectCreated", response.data);
+        emitter.emit("updateCourses");
 
-        this.resetForm();
         this.dialog = false;
       } catch (error) {
         console.error(error);
       }
     },
-    resetForm() {
-      this.$refs.form.reset();
-      this.$refs.form.resetValidation();
+
+    shouldShowCourseType(courseType) {
+      return courseType === "COURSE_TYPE_BACHELOR" ? "Bacharelado" : "Técnico";
     },
   },
 };
