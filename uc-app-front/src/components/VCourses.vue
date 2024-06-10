@@ -45,6 +45,7 @@ export default {
 		this.getCourses();
 
 		emitter.on("updateCourses", () => {
+			console.log("recebeu evento");
 			this.getCourses();
 		});
 	},

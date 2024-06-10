@@ -63,7 +63,7 @@
 							variant="flat"
 							prepend-icon="mdi-content-save"
 							color="success"
-							@click="edit()"
+							@click="edit"
 							>Salvar</v-btn
 						>
 						<v-btn
@@ -103,10 +103,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(
-			"thisssss"
-			// this.translateCourseType(this.selectedCourse.courseType)
-		);
 		this.courseId = this.selectedCourse.courseId;
 		this.courseName = this.selectedCourse.courseName;
 		this.courseType = this.translateCourseType(this.selectedCourse.courseType);
@@ -153,13 +149,14 @@ export default {
 			return a;
 		},
 
-		edit() {
+		async edit() {
 			try {
-				axios.put(`http://localhost:8080/course/${this.courseId}`, {
+				await axios.put(`http://localhost:8080/course/${this.courseId}`, {
 					courseName: this.courseName,
 					courseType: this.translateCourseTypeBack(this.courseType),
 				});
 
+				console.log("fez put");
 				emitter.emit("updateCourses");
 
 				this.dialog = false;
