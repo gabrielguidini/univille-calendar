@@ -91,7 +91,7 @@ public class TeacherController implements TeacherControllerDocumentation {
 
     @PutMapping("/{teacherId}")
     @Transactional
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public TeacherDto updateTeacher(@PathVariable UUID teacherId, @RequestBody TeacherDto teacherDto) throws JsonProcessingException {
         log.info("TeacherController.updateTeacher() -> init process, teacherId {}, updatedTeacher {}", teacherId, this.objectMapper.writeValueAsString(teacherDto));
 

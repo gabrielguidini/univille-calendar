@@ -82,11 +82,11 @@ public class CourseController implements CourseControllerDocuementation {
 
     @PutMapping("/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCourse(@PathVariable UUID courseId) {
+    public CourseDto updateCourse(@PathVariable UUID courseId, @RequestBody CourseDto courseDto) throws JsonProcessingException {
         log.info("CourseController.updateCourse() -> init process, courseId {}", courseId);
 
         try {
-            courseService.deleteCourse(courseId);
+            return courseService.updateCourse(courseId, courseDto);
         }catch (CourseNotFoundException e) {
             log.error("CourseController.update() -> error while trying to update course, courseId {}, error {}",courseId,e.getMessage());
             throw new CourseNotFoundException(e.getMessage());

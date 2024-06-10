@@ -19,4 +19,6 @@ public class ScheduleDto implements Serializable {
     private DayWeekEnum dayWeekEnum;
     private String startingTime;
     private String endingTime;
+    private String room;
+
 }
