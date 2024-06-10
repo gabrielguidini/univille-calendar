@@ -2,6 +2,8 @@ package br.com.univillecalendar.controller;
 
 import br.com.univillecalendar.dto.ScheduleDto;
 import br.com.univillecalendar.dto.SubjectDto;
+import br.com.univillecalendar.exceptions.GenericException;
+import br.com.univillecalendar.exceptions.SubjectNotFoundException;
 import br.com.univillecalendar.model.Subject;
 import br.com.univillecalendar.service.SubjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,23 +22,32 @@ import java.util.UUID;
 public class SubjectController {
 
     private final SubjectService subjectService;
+    private final ObjectMapper objectMapper;
 
     public SubjectController (SubjectService subjectService, ObjectMapper objectMapper) {
         this.subjectService = subjectService;
+        this.objectMapper = objectMapper;
     }
 
     @PostMapping()
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     public Subject createNewSubject(@RequestBody SubjectDto subject) throws JsonProcessingException {
+        log.info("SubjectController.createNewSubject() -> init process, subject: {}", this.objectMapper.writeValueAsString(subject));
+        try {
+            return subjectService.createNewBaseSubject(subject);
 
-        return subjectService.createNewBaseSubject(subject);
+        } catch (GenericException e) {
+            log.error("SubjectController.createNewSubject() -> error while trying to create new subject, body {},error {}",this.objectMapper.writeValueAsString(subject) ,e.getMessage());
+            throw new GenericException(e.getMessage());
+        }
     }
 
     @GetMapping("/all")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public List<Subject> getAllSubjects(){
+        log.info("SubjectController.getAllSubjects() -> init process");
 
         return this.subjectService.getAllSubjects();
     }
@@ -45,19 +56,33 @@ public class SubjectController {
     @Transactional
     @ResponseStatus(HttpStatus.OK)
     public Subject getSubjectById(@PathVariable UUID subjectId){
+        log.info("SubjectController.getSubjectById() -> init process, subjectId: {}", subjectId);
 
-        return this.subjectService.getSubjectById(subjectId);
+        try {
+            return this.subjectService.getSubjectById(subjectId);
+
+        } catch(SubjectNotFoundException e) {
+            log.error("SubjectController.getSubjectById() -> error while trying to get subject by id, subjectId: {}", subjectId);
+            throw new SubjectNotFoundException(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{subjectId}")
     @Transactional
     @ResponseStatus(HttpStatus.OK)
-    public void deleteStudent(@PathVariable UUID subjectId) throws JsonProcessingException {
+    public void deleteSubject(@PathVariable UUID subjectId) throws JsonProcessingException {
         log.info("SubjectController.deleteSubject() -> init process, subjectId {}", subjectId);
 
-        this.subjectService.deleteSubject(subjectId);
+        try {
+            this.subjectService.deleteSubject(subjectId);
 
-        log.info("SubjectController.deleteSubject() -> finish process, subjectId {}", subjectId);
+            log.info("SubjectController.deleteSubject() -> finish process, subjectId {}", subjectId);
+
+        } catch (SubjectNotFoundException e) {
+            log.error("SubjectController.deleteSubject() -> error while trying to delete subject by id, subjectId: {}", subjectId);
+            throw new SubjectNotFoundException(e.getMessage());
+        }
+
     }
 
     @PutMapping("/schedule/{subjectId}")
@@ -66,9 +91,15 @@ public class SubjectController {
     public SubjectDto addScheduleIntoSubject(@PathVariable UUID subjectId,
                                              @RequestBody ScheduleDto scheduleDto) throws JsonProcessingException{
 
-        log.info("SubjectController.updateSubject() -> init process, subjectId {}", subjectId);
+        log.info("SubjectController.addScheduleIntoSubject() -> init process, subjectId {}", subjectId);
 
-        return subjectService.addScheduleIntoSubject(subjectId,scheduleDto);
+        try {
+            return subjectService.addScheduleIntoSubject(subjectId,scheduleDto);
+
+        } catch (SubjectNotFoundException e) {
+            log.error("SubjectController.addScheduleIntoSubject() -> error while trying to add schedule into subject, subjectId: {}", subjectId);
+            throw new SubjectNotFoundException(e.getMessage());
+        }
     }
 
     @PutMapping("/teacher/{subjectId}")
@@ -79,7 +110,13 @@ public class SubjectController {
                                             @RequestParam String teacherLastName) throws JsonProcessingException {
         log.info("SubjectController.addTeacherIntoSubject() -> init process, subjectId {}, teacherFirstName {}", subjectId, teacherFirstName);
 
-        return this.subjectService.addTeacherIntoSubject(subjectId, teacherFirstName, teacherLastName);
+        try {
+            return this.subjectService.addTeacherIntoSubject(subjectId, teacherFirstName, teacherLastName);
+
+        } catch (SubjectNotFoundException e) {
+            log.error("SubjectController.addTeacherIntoSubject() -> error while trying to add teacher into subject, subjectId: {}", subjectId);
+            throw new SubjectNotFoundException(e.getMessage());
+        }
 
     }
 
@@ -91,7 +128,13 @@ public class SubjectController {
 
         log.info("SubjectController.addCourseIntoSubject() -> init process, subjectId {}", subjectId);
 
-        return this.subjectService.addCourseIntoSubject(subjectId,courseName);
+        try {
+            return this.subjectService.addCourseIntoSubject(subjectId,courseName);
+
+        } catch (SubjectNotFoundException e) {
+            log.error("SubjectController.addCourseIntoSubject() -> error while trying to add course into subject, subjectId: {}", subjectId);
+            throw new SubjectNotFoundException(e.getMessage());
+        }
     }
 
 }

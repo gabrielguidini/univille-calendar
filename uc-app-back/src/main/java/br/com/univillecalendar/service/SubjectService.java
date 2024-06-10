@@ -31,6 +31,8 @@ public class SubjectService {
 
     public Subject createNewBaseSubject(SubjectDto subjectDto) throws JsonProcessingException {
 
+        log.info("SubjectService.createNewBaseSubject() -> init process, subject {}", this.objectMapper.writeValueAsString(subjectDto));
+
         Subject subject = Subject.builder()
                 .subjectName(subjectDto.getSubjectName())
                 .schedules(null)
@@ -40,18 +42,22 @@ public class SubjectService {
 
         this.save(subject);
 
+        log.info("SubjectService.createNewBaseSubject() -> finish process, subject {}", this.objectMapper.writeValueAsString(subject));
+
         return subject;
     }
 
     public List<Subject> getAllSubjects(){
+        log.info("SubjectService.getAllSubjects() -> init process");
 
         return this.subjectRepository.findAll();
 
     }
 
-    public Subject getSubjectById(UUID uuid){
+    public Subject getSubjectById(UUID subjectId){
+        log.info("SubjectService.getSubjectById(subjectId) -> init process, subjectId {} ", subjectId);
 
-        return this.subjectRepository.findById(uuid).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
+        return this.subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(SUBJECT_NOT_FOUND));
     }
 
     public void deleteSubject(UUID subjectId) throws JsonProcessingException{
