@@ -13,6 +13,7 @@ public class ScheduleUtils {
                 .dayWeekEnum(schedule.getDayWeekEnum())
                 .startingTime(schedule.getStartingTime())
                 .endingTime(schedule.getEndingTime())
+                .room(schedule.getRoom())
                 .build();
     }
 
@@ -22,6 +23,7 @@ public class ScheduleUtils {
                 .dayWeekEnum(scheduleDto.getDayWeekEnum())
                 .startingTime(scheduleDto.getStartingTime())
                 .endingTime(scheduleDto.getEndingTime())
+                .room(scheduleDto.getRoom())
                 .build();
     }
 }
