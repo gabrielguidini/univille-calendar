@@ -6,6 +6,7 @@
 					<th class="text-left">Disciplina</th>
 					<th class="text-left">Professor</th>
 					<th class="text-left">Horário</th>
+					<th class="text-left">Salas</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +38,15 @@
 								<v-item-subtitle> Nenhum horário disponível </v-item-subtitle>
 							</v-list-item>
 						</v-list>
+					</td>
+					<td>
+						<v-list-item
+							v-for="schedule in subject.schedules"
+							:key="schedule.scheduleId">
+							<v-list-item-title>
+								{{ schedule.room }}
+							</v-list-item-title>
+						</v-list-item>
 					</td>
 				</tr>
 			</tbody>
@@ -96,7 +106,6 @@ export default {
 					console.log(error);
 				});
 		},
-
 		translateDayWeek(enumValue) {
 			switch (enumValue) {
 				case "MONDAY":

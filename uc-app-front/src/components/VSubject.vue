@@ -26,7 +26,7 @@
 								v-for="schedule in subject.schedules"
 								:key="schedule.scheduleId">
 								<v-list-item-title>
-									{{ translateDayWeek(schedule.dayWeekEnum) }}
+									{{ `${translateDayWeek(schedule.dayWeekEnum)}` }}
 								</v-list-item-title>
 
 								<v-list-item-subtitle>

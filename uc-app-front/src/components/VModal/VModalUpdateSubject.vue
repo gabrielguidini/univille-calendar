@@ -165,11 +165,11 @@ export default {
 			subjectId: "",
 			room: "",
 			days: [
-				{ value: "MONDAY" },
-				{ value: "TUESDAY" },
-				{ value: "WEDNESDAY" },
-				{ value: "THURSDAY" },
-				{ value: "FRIDAY" },
+				{ value: "Segunda-feira" },
+				{ value: "Terça-feira" },
+				{ value: "Quarta-feira" },
+				{ value: "Quinta-feira" },
+				{ value: "Sexta-feira" },
 			],
 		};
 	},
@@ -205,7 +205,7 @@ export default {
 				subjectId: this.subjectId,
 				subjectName: this.subjectName,
 				schedule: {
-					dayWeekEnum: this.selectedDayWeekEnum,
+					dayWeekEnum: this.translateDayWeek(this.selectedDayWeekEnum),
 					startingTime: this.selectedStartingTime,
 					endingTime: this.selectedEndingTime,
 					room: this.room,
@@ -220,7 +220,7 @@ export default {
 				subjectId: this.subjectId,
 				subjectName: this.subjectName,
 				schedule: {
-					dayWeekEnum: this.selectedDayWeekEnum,
+					dayWeekEnum: this.translateDayWeek(this.selectedDayWeekEnum),
 					startingTime: this.selectedStartingTime,
 					endingTime: this.selectedEndingTime,
 					room: this.room,
@@ -256,6 +256,22 @@ export default {
 					console.log(error);
 				});
 		},
+		translateDayWeek(enumValue) {
+			switch (enumValue) {
+				case "Segunda-feira":
+					return "MONDAY";
+				case "Terça-feira":
+					return "TUESDAY";
+				case "Quarta-feira":
+					return "WEDNESDAY";
+				case "Quinta-feira":
+					return "THURSDAY";
+				case "Sexta-feira":
+					return "FRIDAY";
+				default:
+					return enumValue;
+			}
+		},
 	},
 
 	computed: {
@@ -271,27 +287,6 @@ export default {
 		endingTime() {
 			const times = [{ value: "20:50" }, { value: "22:30" }];
 			return times.map((time) => time.value);
-		},
-
-		translateDayWeek(enumValue) {
-			switch (enumValue) {
-				case "MONDAY":
-					return "Segunda-feira";
-				case "TUESDAY":
-					return "Terça-feira";
-				case "WEDNESDAY":
-					return "Quarta-feira";
-				case "THURSDAY":
-					return "Quinta-feira";
-				case "FRIDAY":
-					return "Sexta-feira";
-				case "SATURDAY":
-					return "Sábado";
-				case "SUNDAY":
-					return "Domingo";
-				default:
-					return enumValue;
-			}
 		},
 	},
 };

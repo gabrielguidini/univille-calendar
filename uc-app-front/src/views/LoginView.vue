@@ -25,6 +25,7 @@
 											v-model="teacherLastName"
 											:rules="nameRules"
 											label="Senha"
+											type="password"
 											variant="outlined"
 											required></v-text-field>
 									</v-col>
