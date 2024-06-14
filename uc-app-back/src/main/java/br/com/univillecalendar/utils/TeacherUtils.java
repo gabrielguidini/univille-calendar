@@ -15,6 +15,7 @@ public class TeacherUtils {
                 .teacherFirstName(teacher.getTeacherFirstName())
                 .teacherLastName(teacher.getTeacherLastName())
                 .teacherEmail(teacher.getTeacherEmail())
+                .teacherImage(teacher.getTeacherImage())
                 .build();
     }
 
@@ -25,6 +26,7 @@ public class TeacherUtils {
                 .teacherFirstName(teacher.getTeacherFirstName())
                 .teacherLastName(teacher.getTeacherLastName())
                 .teacherEmail(teacher.getTeacherEmail())
+                .teacherImage(teacher.getTeacherImage())
                 .build();
     }
 }
