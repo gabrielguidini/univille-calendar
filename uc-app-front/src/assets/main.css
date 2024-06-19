@@ -1,12 +1,12 @@
 @import "./base.css";
 
 #app {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
+ display: flex;
+ flex-direction: row;
+ margin: 0;
+ padding: 0;
+ font-weight: normal;
 }
 html {
-  overflow-y: auto !important;
+ overflow-y: auto !important;
 }

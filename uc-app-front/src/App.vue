@@ -1,7 +1,7 @@
 <template>
-  <v-app theme="dark">
+  <v-app theme="light">
     <VHeader />
-    <router-view></router-view>
+    <router-view> </router-view>
   </v-app>
 </template>
 
@@ -10,16 +10,16 @@ import VTeachers from "./components/VTeachers.vue";
 import VHeader from "./components/VHeader.vue";
 
 export default {
+  name: "App",
   components: {
     VTeachers,
     VHeader,
   },
   data() {
-    return {
-      isLogged: this.$store.state.isLogged,
-    };
+    return {};
   },
 };
 </script>
 
-<style></style>
+<style>
+</style>

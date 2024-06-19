@@ -76,6 +76,7 @@ public class TeacherService {
         teacher.setTeacherFirstName(teacherDto.getTeacherFirstName());
         teacher.setTeacherLastName(teacherDto.getTeacherLastName());
         teacher.setTeacherEmail(teacherDto.getTeacherEmail());
+        teacher.setTeacherImage(teacherDto.getTeacherImage());
 
         this.save(teacher);
 

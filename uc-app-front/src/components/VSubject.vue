@@ -6,7 +6,8 @@
 					<th class="text-left">Disciplina</th>
 					<th class="text-left">Professor</th>
 					<th class="text-left">Horário</th>
-					<th class="text-left">Salas</th>
+					<th class="text-left">Sala</th>
+					<th class="text-left">Editar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,7 +26,7 @@
 								v-for="schedule in subject.schedules"
 								:key="schedule.scheduleId">
 								<v-list-item-title>
-									{{ translateDayWeek(schedule.dayWeekEnum) }}
+									{{ `${translateDayWeek(schedule.dayWeekEnum)}` }}
 								</v-list-item-title>
 
 								<v-list-item-subtitle>
@@ -47,6 +48,13 @@
 								{{ schedule.room }}
 							</v-list-item-title>
 						</v-list-item>
+					</td>
+					<td>
+						<VModalUpdateSubject
+							:selectedSubject="subject"
+							@editSubjectsSchedule="editSubjectsSchedule"
+							@editSubjectsTeacher="editSubjectsTeacher"
+							@deleteSubjects="deleteSubjects" />
 					</td>
 				</tr>
 			</tbody>
@@ -80,6 +88,11 @@ export default {
 	},
 	mounted() {
 		this.getSubjects();
+
+		emitter.on("getSubjects", () => {
+			console.log("chegou evento subjects");
+			this.getSubjects();
+		});
 	},
 
 	created() {
@@ -101,11 +114,59 @@ export default {
 				.get("http://localhost:8080/subject/all")
 				.then((response) => {
 					this.subjects = response.data;
+
+					console.log(response.data);
 				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
+
+		deleteSubjects(Id) {
+			axios
+				.delete(`http://localhost:8080/subject/${Id}`)
+				.then((response) => {
+					this.subjects = this.subjects.filter(
+						(subject) => subject.subjectId !== Id
+					);
+				})
+				.catch((error) => {
+					console.log(error);
+					console.log("👉 Eu tenteeei");
+				});
+		},
+
+		async editSubjectsSchedule(subjectParams) {
+			console.log("entrou no put schedule");
+			await axios
+				.put(
+					`http://localhost:8080/subject/schedule/${subjectParams.subjectId}`,
+					{
+						dayWeekEnum: subjectParams.schedule.dayWeekEnum,
+						startingTime: subjectParams.schedule.startingTime,
+						endingTime: subjectParams.schedule.endingTime,
+						room: subjectParams.schedule.room,
+					}
+				)
+
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+
+		async editSubjectsTeacher(subjectParams) {
+			await axios
+				.put(
+					`http://localhost:8080/subject/teacher/${subjectParams.subjectId}?teacherFirstName=${subjectParams.teacher.teacherFirstName}&teacherLastName=${subjectParams.teacher.teacherLastName}`,
+					{}
+				)
+				.catch((error) => {
+					console.log(error);
+				});
+
+			emitter.emit("getSubjects");
+		},
+
 		translateDayWeek(enumValue) {
 			switch (enumValue) {
 				case "MONDAY":

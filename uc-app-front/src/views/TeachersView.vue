@@ -1,22 +1,24 @@
 <template>
-  <v-main>
+  <v-main class="bg-grey-lighten-2">
     <v-container class="d-flex flex-column ga-5">
-      <h1>Professores</h1>
-
-      <v-card
-        class="d-flex justify-start pa-2"
-        color="transparent"
-        elevation="0"
-      >
+      <v-card flat class="rounded-lg">
+        <v-card class="" color="grey-lighten-5">
+          <v-card-actions
+            class="d-flex justify-space-between align-center pa-2"
+          >
+            <v-card-title>Professores</v-card-title>
+            <VModalCreateTeacher />
+          </v-card-actions>
+        </v-card>
       </v-card>
 
-      <v-card class="d-flex justify-end pa-2" color="transparent" elevation="0">
-        <VModalCreateTeacher />
+      <v-card flat class="rounded-lg bg-grey-lighten-5">
+        <v-container>
+          <v-row class="d-flex pa-9">
+            <VTeachers />
+          </v-row>
+        </v-container>
       </v-card>
-
-      <v-row>
-        <VTeachers />
-      </v-row>
     </v-container>
   </v-main>
 </template>
@@ -29,6 +31,12 @@ export default {
   components: {
     VTeachers,
     VModalCreateTeacher,
+  },
+
+  data() {
+    return {
+      teachers: [],
+    };
   },
 };
 </script>

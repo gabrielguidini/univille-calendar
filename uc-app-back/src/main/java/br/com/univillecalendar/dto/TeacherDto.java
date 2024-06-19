@@ -17,4 +17,5 @@ public class TeacherDto implements Serializable {
     private String teacherFirstName;
     private String teacherLastName;
     private String teacherEmail;
+    private String teacherImage;
 }
